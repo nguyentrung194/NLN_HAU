@@ -15,9 +15,52 @@ import { useFormik } from "formik";
 import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../config";
+import { useParams } from "react-router-dom";
 
-export const AddRoom = () => {
+export const EditInvoices = () => {
   const { addToast } = useToasts();
+  const { id } = useParams();
+
+  React.useEffect(() => {
+    async function fetchData(id: string) {
+      // You can await here
+      await axios({
+        url: `${environment.api}invoices/${id}`,
+        method: "GET",
+        // withCredentials: true,
+      })
+        .then(
+          ({
+            data: { data },
+          }: {
+            data: {
+              data: React.SetStateAction<{
+                id: string;
+                no: string;
+                roomType: string;
+                AC: string;
+                meal: string;
+                bedCapacity: string;
+                rent: string;
+                status: string;
+              }>;
+            };
+          }) => {
+            // Handle success
+            formik.setValues(data);
+            console.log(data);
+          }
+        )
+        .catch((err) => {
+          console.log(err);
+          // Handle error
+          console.log(err);
+        });
+    }
+    if (id) {
+      fetchData(id);
+    }
+  }, [id]);
 
   const formik = useFormik({
     initialValues: {
@@ -35,8 +78,8 @@ export const AddRoom = () => {
         formik.setSubmitting(true);
         // code there
         axios({
-          url: `${environment.api}rooms`,
-          method: "POST",
+          url: `${environment.api}invoices/${id}`,
+          method: "PUT",
           data: {},
           withCredentials: true,
         })
@@ -72,7 +115,7 @@ export const AddRoom = () => {
       <div className="flex justify-between items-center px-6 pt-6">
         <div className="">
           <h3 className="text-3xl leading-none font-bold font-serif">
-            Add Room
+            Edit Invoices
           </h3>
         </div>
       </div>
@@ -111,13 +154,13 @@ export const AddRoom = () => {
               </FormControl>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
-                  <InputLabel id="Select-Room-Type-label">
-                    Select Room Type
+                  <InputLabel id="Select-Invoices-Type-label">
+                    Select Invoices Type
                   </InputLabel>
                   <Select
-                    labelId="Select-Room-Type-label"
-                    id="Select-Room-Type"
-                    label="Select Room Type"
+                    labelId="Select-Invoices-Type-label"
+                    id="Select-Invoices-Type"
+                    label="Select Invoices Type"
                     value={formik.values.roomType}
                     onChange={(event: SelectChangeEvent) => {
                       formik.setFieldValue("roomType", event.target.value);
@@ -207,7 +250,7 @@ export const AddRoom = () => {
                 </FormControl>
               </div>
               <Button type="submit" variant="contained">
-                Add Room
+                Edit Invoices
               </Button>
             </Box>
           </CardContent>

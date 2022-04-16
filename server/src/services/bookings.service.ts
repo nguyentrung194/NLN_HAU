@@ -1,8 +1,8 @@
 import { hash } from 'bcrypt';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { User } from '@interfaces/users.interface';
-import userModel from '@models/users.model';
+import { User } from '@/interfaces/interface';
+import { userModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
 
 class BookingService {
@@ -16,7 +16,7 @@ class BookingService {
   public async findUserById(userId: string): Promise<User> {
     if (isEmpty(userId)) throw new HttpException(400, "You're not userId");
 
-    const findUser: User = await this.users.findOne({ _id: userId });
+    const findUser: User = await this.users.findOne({ id: userId });
     if (!findUser) throw new HttpException(409, "You're not user");
 
     return findUser;
@@ -26,10 +26,14 @@ class BookingService {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
     const findUser: User = await this.users.findOne({ email: userData.email });
-    if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
+    if (findUser)
+      throw new HttpException(409, `You're email ${userData.email} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
+    const createUserData: User = await this.users.create({
+      ...userData,
+      password: hashedPassword,
+    });
 
     return createUserData;
   }
@@ -39,7 +43,8 @@ class BookingService {
 
     if (userData.email) {
       const findUser: User = await this.users.findOne({ email: userData.email });
-      if (findUser && findUser._id != userId) throw new HttpException(409, `You're email ${userData.email} already exists`);
+      if (findUser && findUser.id != userId)
+        throw new HttpException(409, `You're email ${userData.email} already exists`);
     }
 
     if (userData.password) {

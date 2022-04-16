@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
-import { User } from '@interfaces/users.interface';
+import { User } from '@/interfaces/interface';
 import userService from '@services/users.service';
 
 class UsersController {
@@ -18,7 +18,7 @@ class UsersController {
 
   public getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
+      const userId: string = req.params.id || req.cookies.id;
       const findOneUserData: User = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
@@ -40,7 +40,7 @@ class UsersController {
 
   public updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
+      const userId: string = req.params.id || req.cookies.id;
       const userData: CreateUserDto = req.body;
       const updateUserData: User = await this.userService.updateUser(userId, userData);
 
@@ -52,7 +52,7 @@ class UsersController {
 
   public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
+      const userId: string = req.params.id || req.cookies.id;
       const deleteUserData: User = await this.userService.deleteUser(userId);
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });

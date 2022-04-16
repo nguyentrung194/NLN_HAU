@@ -16,18 +16,17 @@ import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../config";
 
-export const AddRoom = () => {
+export const AddBookingReport = () => {
   const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
       id: "",
-      no: "",
-      roomType: "",
-      AC: "",
-      meal: "",
-      bedCapacity: "",
+      name: "",
       rent: "",
+      shortCode: "",
+      noOfRoom: "",
+      type: "",
       status: "",
     },
     onSubmit: async (values) => {
@@ -35,7 +34,7 @@ export const AddRoom = () => {
         formik.setSubmitting(true);
         // code there
         axios({
-          url: `${environment.api}rooms`,
+          url: `${environment.api}booking-report`,
           method: "POST",
           data: {},
           withCredentials: true,
@@ -72,7 +71,7 @@ export const AddRoom = () => {
       <div className="flex justify-between items-center px-6 pt-6">
         <div className="">
           <h3 className="text-3xl leading-none font-bold font-serif">
-            Add Room
+            Add Booking Report
           </h3>
         </div>
       </div>
@@ -101,80 +100,11 @@ export const AddRoom = () => {
               </FormControl>
               <FormControl variant="standard" className="col-span-1">
                 <TextField
-                  id="No"
-                  value={formik.values.no}
+                  id="Name"
+                  value={formik.values.name}
                   onChange={formik.handleChange}
-                  label="No"
-                  name="no"
-                  required
-                />
-              </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-Room-Type-label">
-                    Select Room Type
-                  </InputLabel>
-                  <Select
-                    labelId="Select-Room-Type-label"
-                    id="Select-Room-Type"
-                    label="Select Room Type"
-                    value={formik.values.roomType}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("roomType", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Single"}>Single</MenuItem>
-                    <MenuItem value={"Double"}>Double</MenuItem>
-                    <MenuItem value={"Delux"}>Delux</MenuItem>
-                    <MenuItem value={"Super Delux"}>Super Delux</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="AC/NON AC-label">AC/NON AC</InputLabel>
-                  <Select
-                    labelId="AC/NON AC-label"
-                    id="AC/NON AC"
-                    label="AC/NON AC"
-                    value={formik.values.AC}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("AC", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"AC"}>AC</MenuItem>
-                    <MenuItem value={"NON AC"}>NON AC</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Meal-label">Meal</InputLabel>
-                  <Select
-                    labelId="Meal-label"
-                    id="Meal"
-                    label="Meal"
-                    value={formik.values.meal}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("meal", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"none"}>None</MenuItem>
-                    <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-                    <MenuItem value={"Lunch"}>Lunch</MenuItem>
-                    <MenuItem value={"Dinner"}>Dinner</MenuItem>
-                    <MenuItem value={"Two"}>Two</MenuItem>
-                    <MenuItem value={"All"}>All</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Bed Capacity"
-                  value={formik.values.bedCapacity}
-                  onChange={formik.handleChange}
-                  label="Bed Capacity"
-                  name="bedCapacity"
+                  label="Name"
+                  name="name"
                   required
                 />
               </FormControl>
@@ -185,6 +115,38 @@ export const AddRoom = () => {
                   onChange={formik.handleChange}
                   label="Rent"
                   name="rent"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Short Code"
+                  value={formik.values.shortCode}
+                  onChange={formik.handleChange}
+                  label="Short Code"
+                  name="shortCode"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="No Of Room"
+                  value={formik.values.noOfRoom}
+                  onChange={formik.handleChange}
+                  label="No Of Room"
+                  name="noOfRoom"
+                  type="number"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Type"
+                  value={formik.values.type}
+                  onChange={formik.handleChange}
+                  label="Type"
+                  name="type"
+                  type="number"
                   required
                 />
               </FormControl>
@@ -200,14 +162,13 @@ export const AddRoom = () => {
                       formik.setFieldValue("status", event.target.value);
                     }}
                   >
-                    <MenuItem value={"Open"}>Open</MenuItem>
+                    <MenuItem value={"Active"}>Active</MenuItem>
                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                    <MenuItem value={"Booked"}>Booked</MenuItem>
                   </Select>
                 </FormControl>
               </div>
               <Button type="submit" variant="contained">
-                Add Room
+                Add Booking Report
               </Button>
             </Box>
           </CardContent>

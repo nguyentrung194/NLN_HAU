@@ -52,6 +52,12 @@ body::-webkit-scrollbar-thumb {
   /* background: var(--scrollbarBG); */
 }
 .scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: inherit ;
+  border-radius: 6px;
+  border: 3px solid inherit;
+}
+
+.parent-nav-admin:hover .scrollbar-custom::-webkit-scrollbar-thumb {
   background-color: var(--thumbBG) ;
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);

@@ -110,7 +110,10 @@ const navs = [
   {
     name: "Rooms",
     to: "/rooms",
-    items: [],
+    items: [
+      { name: "All Rooms", to: "/all" },
+      { name: "Rooms Type", to: "/rooms-type" },
+    ],
   },
   {
     name: "Reports",
@@ -130,8 +133,7 @@ const navs = [
     name: "Payment",
     to: "/payment",
     items: [
-      { name: "Invocie List", to: "/invocie-list" },
-      { name: "Invocie Details", to: "/invocie-details" },
+      { name: "Invocie List", to: "/invoices-list" },
     ],
   },
 ];

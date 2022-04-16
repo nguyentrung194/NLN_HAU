@@ -5,7 +5,7 @@ import { User } from '@/interfaces/interface';
 import { userModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
 
-class UserService {
+class RoomService {
   public users = userModel;
 
   public async findAllUser(): Promise<User[]> {
@@ -66,4 +66,4 @@ class UserService {
   }
 }
 
-export default UserService;
+export default RoomService;

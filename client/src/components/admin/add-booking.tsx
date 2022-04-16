@@ -42,7 +42,7 @@ export const AddBooking = () => {
         formik.setSubmitting(true);
         // code there
         axios({
-          url: `${environment.api}add-booking`,
+          url: `${environment.api}bookings`,
           method: "POST",
           data: {},
           withCredentials: true,
@@ -123,12 +123,12 @@ export const AddBooking = () => {
                     labelId="Gender-label"
                     id="Gender"
                     label="Gender"
-                    value={formik.values.gender || ""}
+                    value={formik.values.gender}
                     onChange={(event: SelectChangeEvent) => {
                       formik.setFieldValue("gender", event.target.value);
                     }}
                   >
-                    <MenuItem value="">
+                    <MenuItem value={"none"}>
                       <em>Not prefer</em>
                     </MenuItem>
                     <MenuItem value={"Male"}>Male</MenuItem>
@@ -215,7 +215,7 @@ export const AddBooking = () => {
                     labelId="Select-an-package-label"
                     id="Select-an-package"
                     label="Select an package"
-                    value={formik.values.package_p || "Strater Package"}
+                    value={formik.values.package_p}
                     onChange={(event: SelectChangeEvent) => {
                       formik.setFieldValue("package_p", event.target.value);
                     }}
@@ -242,7 +242,7 @@ export const AddBooking = () => {
                     labelId="Select-Room-Type-label"
                     id="Select-Room-Type"
                     label="Select Room Type"
-                    value={formik.values.roomType || "Single"}
+                    value={formik.values.roomType}
                     onChange={(event: SelectChangeEvent) => {
                       formik.setFieldValue("roomType", event.target.value);
                     }}

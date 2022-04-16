@@ -9,7 +9,7 @@ export const AdminLayout = () => {
     <>
       <div className="grid grid-cols-12">
         <div
-          className="w-1/6"
+          className="parent-nav-admin w-1/6"
           style={{
             position: "fixed",
             top: clientHeight,

@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@/interfaces/interface';
-import bookingService from '@services/bookings.service';
+import roomsService from '@services/rooms.service';
 
-class BookingsController {
-  public bookingService = new bookingService();
+class RoomsController {
+  public roomsService = new roomsService();
 
   public getUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllUsersData: User[] = await this.bookingService.findAllUser();
+      const findAllUsersData: User[] = await this.roomsService.findAllUser();
 
       res.status(200).json({ data: findAllUsersData, message: 'findAll' });
     } catch (error) {
@@ -22,18 +22,13 @@ class BookingsController {
       res.status(200).json({
         data: {
           id: userId,
-          firstName: 'Nguyen',
-          lastName: 'Trung',
-          gender: 'Male',
-          phone: '0868421606',
-          email: 'trungdipdo5@gmail.com',
-          address: 'Ninh Kieu, Can Tho',
-          photo: '',
-          package_p: 'Strater',
-          roomType: 'Super Delux',
-          arrive: '10 Feb 2020',
-          totalPerson: '3',
-          note: 'Something...',
+          no: userId,
+          roomType: 'Single',
+          AC: 'AC',
+          meal: 'none',
+          bedCapacity: '2',
+          rent: '32',
+          status: 'Open',
         },
         message: 'findOne',
       });
@@ -45,7 +40,7 @@ class BookingsController {
   public createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;
-      const createUserData: User = await this.bookingService.createUser(userData);
+      const createUserData: User = await this.roomsService.createUser(userData);
 
       res.status(201).json({ data: createUserData, message: 'created' });
     } catch (error) {
@@ -57,7 +52,7 @@ class BookingsController {
     try {
       const userId: string = req.params.id;
       const userData: CreateUserDto = req.body;
-      const updateUserData: User = await this.bookingService.updateUser(userId, userData);
+      const updateUserData: User = await this.roomsService.updateUser(userId, userData);
 
       res.status(200).json({ data: updateUserData, message: 'updated' });
     } catch (error) {
@@ -68,7 +63,7 @@ class BookingsController {
   public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId: string = req.params.id;
-      const deleteUserData: User = await this.bookingService.deleteUser(userId);
+      const deleteUserData: User = await this.roomsService.deleteUser(userId);
 
       res.status(200).json({ data: deleteUserData, message: 'deleted' });
     } catch (error) {
@@ -77,4 +72,4 @@ class BookingsController {
   };
 }
 
-export default BookingsController;
+export default RoomsController;

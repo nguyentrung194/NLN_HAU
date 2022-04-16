@@ -11,13 +11,14 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { SelectFilter } from "./common";
 import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 
-export const MenuBooking = ({ optionsBooking }: any) => {
+export const MenuCustom = ({ optionsBooking }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -42,6 +43,65 @@ export const MenuBooking = ({ optionsBooking }: any) => {
         onClick={handleClick}
       >
         <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          "aria-labelledby": "long-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: "20ch",
+          },
+        }}
+      >
+        {optionsBooking.map(
+          (option: { key: string; path: string; text: string }) => (
+            <MenuItem
+              key={option.key}
+              selected={option.text === "Pyxis"}
+              onClick={() => {
+                handleClose({ path: option.path });
+              }}
+            >
+              {option.text}
+            </MenuItem>
+          )
+        )}
+      </Menu>
+    </div>
+  );
+};
+
+export const MenuCustomHead = ({ optionsBooking }: any) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = ({ path }: { path: string }) => {
+    if (path) {
+      navigate(path);
+    }
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <AddBoxIcon />
       </IconButton>
       <Menu
         id="long-menu"
@@ -210,7 +270,7 @@ export const SetupCustom = () => {
 export const FilterCustom = (props: {
   selectOptions: any[];
   selectOptions1: any[];
-  selectOptions2: any[];
+  selectOptions2?: any[];
   title: string;
   emailVerified?: boolean;
 }) => {
@@ -264,7 +324,7 @@ export const FilterCustom = (props: {
               {props.title}
             </Typography>
           </div>
-          <MenuBooking optionsBooking={props.selectOptions} />
+          <MenuCustom optionsBooking={props.selectOptions} />
         </div>
         {props.emailVerified ? (
           <div className="px-3">
@@ -277,11 +337,13 @@ export const FilterCustom = (props: {
             name="STATUS"
             initValue={""}
           />
-          <SelectFilter
-            values={props.selectOptions2}
-            name="ROOM TYPE"
-            initValue={""}
-          />
+          {props.selectOptions2?.length ? (
+            <SelectFilter
+              values={props.selectOptions2}
+              name="ROOM TYPE"
+              initValue={""}
+            />
+          ) : null}
         </div>
         <div className="p-3">
           <Button

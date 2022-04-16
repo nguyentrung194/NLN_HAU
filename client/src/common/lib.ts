@@ -103,10 +103,169 @@ export interface DataRoom {
   roomType: string;
   AC: string;
   meal: string;
-  bedCapacity: number;
-  rent: number;
-  status: number;
+  bedCapacity: string;
+  rent: string;
+  status: string;
 }
+
+export interface DataRoomType {
+  id: string;
+  name: string;
+  rent: string;
+  shortCode: string;
+  noOfRoom: string;
+  type: string;
+  status: string;
+}
+
+export interface DataStock {
+  id: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  unit: string;
+  status: "Available" | "Low" | "Out of Stock";
+}
+
+export interface DataExpenses {
+  id: string;
+  supplierName: string;
+  description: string;
+  date: string;
+  amount: number;
+}
+
+export interface DataBookingReport {
+  id: string;
+  roomType: string;
+  from: string;
+  to: string;
+  totalAmount: number;
+}
+
+export interface DataCustomer {
+  id: string;
+  name: string;
+  email: string;
+  lastPackage: string;
+  phone: string;
+  verified: "Active" | "Deactive";
+  lastCheckOut: string;
+  group: "Basic" | "Silver" | "Gold" | "Platinum" | "Dimond";
+}
+
+export interface DataInvoices {
+  id: string;
+  date: string;
+  amount: number;
+  status: "Complete" | "Pending";
+}
+
+export const createDataInvoices = (
+  id: string,
+  date: string,
+  amount: number,
+  status: "Complete" | "Pending"
+): DataInvoices => {
+  return {
+    id,
+    date,
+    amount,
+    status,
+  };
+};
+
+export const createDataCustomer = (
+  id: string,
+  name: string,
+  email: string,
+  lastPackage: string,
+  phone: string,
+  verified: "Active" | "Deactive",
+  lastCheckOut: string,
+  group: "Basic" | "Silver" | "Gold" | "Platinum" | "Dimond"
+): DataCustomer => {
+  return {
+    id,
+    name,
+    email,
+    lastPackage,
+    phone,
+    verified,
+    lastCheckOut,
+    group,
+  };
+};
+
+export const createDataBookingReport = (
+  id: string,
+  roomType: string,
+  from: string,
+  to: string,
+  totalAmount: number
+): DataBookingReport => {
+  return {
+    id,
+    roomType,
+    from,
+    to,
+    totalAmount,
+  };
+};
+
+export const createDataExpenses = (
+  id: string,
+  supplierName: string,
+  description: string,
+  date: string,
+  amount: number
+): DataExpenses => {
+  return {
+    id,
+    supplierName,
+    description,
+    date,
+    amount,
+  };
+};
+
+export const createDataStock = (
+  id: string,
+  productName: string,
+  quantity: number,
+  unit: string,
+  price: number,
+  status: "Available" | "Low" | "Out of Stock"
+): DataStock => {
+  return {
+    id,
+    productName,
+    quantity,
+    unit,
+    price,
+    status,
+  };
+};
+
+export const createDataRoomType = (
+  id: string,
+  name: string,
+  rent: string,
+  shortCode: string,
+  noOfRoom: string,
+  type: string,
+  status: string
+): DataRoomType => {
+  return {
+    id,
+    name,
+    rent,
+    shortCode,
+    noOfRoom,
+    type,
+    status,
+  };
+};
 
 export const createDataRoom = (
   id: string,
@@ -114,9 +273,9 @@ export const createDataRoom = (
   roomType: string,
   AC: string,
   meal: string,
-  bedCapacity: number,
-  rent: number,
-  status: number
+  bedCapacity: string,
+  rent: string,
+  status: string
 ): DataRoom => {
   return {
     id,

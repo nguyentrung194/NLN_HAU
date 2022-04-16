@@ -2,7 +2,7 @@ import * as React from "react";
 import { CardBooking } from "./common/card";
 import { Typography, Button } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import { MenuBooking } from "./common/menu";
+import { MenuCustomHead } from "./common/menu";
 
 export const Bookings = () => {
   return (
@@ -27,7 +27,7 @@ export const Bookings = () => {
               <span className="pl-3">Export booking</span>
             </span>
           </Button>
-          <MenuBooking
+          <MenuCustomHead
             optionsBooking={[
               {
                 key: "1",

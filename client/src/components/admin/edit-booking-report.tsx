@@ -17,7 +17,7 @@ import axios from "axios";
 import environment from "../../config";
 import { useParams } from "react-router-dom";
 
-export const EditRoom = () => {
+export const EditBookingReport = () => {
   const { addToast } = useToasts();
   const { id } = useParams();
 
@@ -25,7 +25,7 @@ export const EditRoom = () => {
     async function fetchData(id: string) {
       // You can await here
       await axios({
-        url: `${environment.api}rooms/${id}`,
+        url: `${environment.api}booking-report/${id}`,
         method: "GET",
         // withCredentials: true,
       })
@@ -78,7 +78,7 @@ export const EditRoom = () => {
         formik.setSubmitting(true);
         // code there
         axios({
-          url: `${environment.api}edit-booking`,
+          url: `${environment.api}booking-report/${id}`,
           method: "PUT",
           data: {},
           withCredentials: true,
@@ -115,7 +115,7 @@ export const EditRoom = () => {
       <div className="flex justify-between items-center px-6 pt-6">
         <div className="">
           <h3 className="text-3xl leading-none font-bold font-serif">
-            Edit Booking
+            Edit Booking Report
           </h3>
         </div>
       </div>
@@ -154,13 +154,13 @@ export const EditRoom = () => {
               </FormControl>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
-                  <InputLabel id="Select-Room-Type-label">
-                    Select Room Type
+                  <InputLabel id="Select-Booking Report-Type-label">
+                    Select Booking Report Type
                   </InputLabel>
                   <Select
-                    labelId="Select-Room-Type-label"
-                    id="Select-Room-Type"
-                    label="Select Room Type"
+                    labelId="Select-Booking Report-Type-label"
+                    id="Select-Booking Report-Type"
+                    label="Select Booking Report Type"
                     value={formik.values.roomType}
                     onChange={(event: SelectChangeEvent) => {
                       formik.setFieldValue("roomType", event.target.value);
@@ -202,7 +202,7 @@ export const EditRoom = () => {
                       formik.setFieldValue("meal", event.target.value);
                     }}
                   >
-                    <MenuItem value={""}>None</MenuItem>
+                    <MenuItem value={"none"}>None</MenuItem>
                     <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
                     <MenuItem value={"Lunch"}>Lunch</MenuItem>
                     <MenuItem value={"Dinner"}>Dinner</MenuItem>
@@ -233,7 +233,7 @@ export const EditRoom = () => {
               </FormControl>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
-                  <InputLabel id="Status-label">Select an package</InputLabel>
+                  <InputLabel id="Status-label">Select an status</InputLabel>
                   <Select
                     labelId="Status-label"
                     id="Status"
@@ -250,7 +250,7 @@ export const EditRoom = () => {
                 </FormControl>
               </div>
               <Button type="submit" variant="contained">
-                Edit Room
+                Edit Booking Report
               </Button>
             </Box>
           </CardContent>
