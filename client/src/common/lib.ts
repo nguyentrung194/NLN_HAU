@@ -88,13 +88,12 @@ export function stringAvatar(
 
 export interface DataBooking {
   id: string;
-  customer: string;
-  phone: string;
-  booking: string;
+  email: string;
+  booking: "Pending" | "Active";
   package_p: string;
   roomType: string;
   arrive: string;
-  payment: string;
+  payment: "Paid" | "Due";
 }
 
 export interface DataRoom {
@@ -289,24 +288,34 @@ export const createDataRoom = (
   };
 };
 
+interface Bookings {
+  id: string;
+  email: string;
+  booking: "Pending" | "Active";
+  package_p: string;
+  roomType: string;
+  arrive: string;
+  payment: "Paid" | "Due";
+  name: string;
+}
 export const createDataBooking = (
   id: string,
-  customer: string,
-  phone: string,
+  email: string,
   package_p: string,
-  booking: string,
+  booking: "Pending" | "Active",
   roomType: string,
   arrive: string,
-  payment: string
-): DataBooking => {
+  payment: "Paid" | "Due",
+  name: string
+): Bookings => {
   return {
     id,
-    customer,
-    phone,
+    email,
     package_p,
     booking,
     roomType,
     arrive,
     payment,
+    name,
   };
 };

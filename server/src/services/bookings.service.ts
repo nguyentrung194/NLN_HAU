@@ -1,68 +1,55 @@
-import { hash } from 'bcrypt';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateBookingDto } from '@dtos/bookings.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { User } from '@/interfaces/interface';
-import { userModel } from '@/models/model';
+import { Booking } from '@/interfaces/interface';
+import { bookingModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
 
 class BookingService {
-  public users = userModel;
+  public bookings = bookingModel;
 
-  public async findAllUser(): Promise<User[]> {
-    const users: User[] = await this.users.find();
-    return users;
+  public async findAllBooking(): Promise<Booking[]> {
+    const bookings: Booking[] = await this.bookings.find();
+    return bookings;
   }
 
-  public async findUserById(userId: string): Promise<User> {
-    if (isEmpty(userId)) throw new HttpException(400, "You're not userId");
+  public async findBookingById(bookingId: string): Promise<Booking> {
+    if (isEmpty(bookingId)) throw new HttpException(400, "You're not bookingId");
 
-    const findUser: User = await this.users.findOne({ id: userId });
-    if (!findUser) throw new HttpException(409, "You're not user");
+    const findBooking: Booking = await this.bookings.findOne({ id: bookingId });
+    if (!findBooking) throw new HttpException(409, "You're not booking");
 
-    return findUser;
+    return findBooking;
   }
 
-  public async createUser(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+  public async createBooking(bookingData: CreateBookingDto): Promise<Booking> {
+    if (isEmpty(bookingData)) throw new HttpException(400, "You're not bookingData");
 
-    const findUser: User = await this.users.findOne({ email: userData.email });
-    if (findUser)
-      throw new HttpException(409, `You're email ${userData.email} already exists`);
-
-    const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({
-      ...userData,
-      password: hashedPassword,
+    const createBookingData: Booking = await this.bookings.create({
+      ...bookingData,
     });
 
-    return createUserData;
+    return createBookingData;
   }
 
-  public async updateUser(userId: string, userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+  public async updateBooking(
+    bookingId: string,
+    bookingData: CreateBookingDto,
+  ): Promise<Booking> {
+    if (isEmpty(bookingData)) throw new HttpException(400, "You're not bookingData");
 
-    if (userData.email) {
-      const findUser: User = await this.users.findOne({ email: userData.email });
-      if (findUser && findUser.id != userId)
-        throw new HttpException(409, `You're email ${userData.email} already exists`);
-    }
+    const updateBookingById: Booking = await this.bookings.findByIdAndUpdate(bookingId, {
+      bookingData,
+    });
+    if (!updateBookingById) throw new HttpException(409, "You're not booking");
 
-    if (userData.password) {
-      const hashedPassword = await hash(userData.password, 10);
-      userData = { ...userData, password: hashedPassword };
-    }
-
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, { userData });
-    if (!updateUserById) throw new HttpException(409, "You're not user");
-
-    return updateUserById;
+    return updateBookingById;
   }
 
-  public async deleteUser(userId: string): Promise<User> {
-    const deleteUserById: User = await this.users.findByIdAndDelete(userId);
-    if (!deleteUserById) throw new HttpException(409, "You're not user");
+  public async deleteBooking(bookingId: string): Promise<Booking> {
+    const deleteBookingById: Booking = await this.bookings.findByIdAndDelete(bookingId);
+    if (!deleteBookingById) throw new HttpException(409, "You're not booking");
 
-    return deleteUserById;
+    return deleteBookingById;
   }
 }
 

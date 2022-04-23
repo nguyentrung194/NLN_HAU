@@ -382,6 +382,7 @@ export const Card7 = (props: any) => {
 };
 
 export const CardBooking = (props: any) => {
+  
   return (
     <Card sx={{ minWidth: 0, height: "100%" }}>
       <CardContent>

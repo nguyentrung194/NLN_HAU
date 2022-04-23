@@ -5,7 +5,7 @@ import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
 import { userModel } from '@/models/model';
 
-const authMiddleware = async (
+const authMiddlewareAdmin = async (
   req: RequestWithUser,
   res: Response,
   next: NextFunction,
@@ -24,7 +24,7 @@ const authMiddleware = async (
         secretKey,
       )) as DataStoredInToken;
       const userId = verificationResponse.id;
-      const findUser = await userModel.findOne({ id: userId });
+      const findUser = await userModel.findOne({ id: userId, roles: 'Admin' });
 
       if (findUser) {
         req.user = findUser;
@@ -40,4 +40,4 @@ const authMiddleware = async (
   }
 };
 
-export default authMiddleware;
+export default authMiddlewareAdmin;

@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import environment from "../../config";
-import { PhongContext } from "../../contexts/reducer";
+import { PhongContext } from "../../contexts/context";
 import { Link, useLocation } from "react-router-dom";
 import profile from "../../assets/images/hau.jpg";
 import { classNames } from "../../common/lib";

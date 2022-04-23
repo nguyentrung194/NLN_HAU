@@ -4,16 +4,16 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  lastPackage: string;
+  lastPackage: Array<string>;
   verified: 'Active' | 'Deactive';
-  lastCheckOut: string;
+  lastCheckOut: Array<string>;
   group: 'Basic' | 'Silver' | 'Gold' | 'Platinum' | 'Dimond';
-  roles: Array<String>;
+  roles: Array<string>;
 }
 
 export interface Booking {
   id: string;
-  customerId: string;
+  email: string;
   booking: 'Pending' | 'Active';
   package_p: string;
   roomType: string;
@@ -51,7 +51,7 @@ export interface Stock {
   status: 'Available' | 'Low' | 'Out of Stock';
 }
 
-export interface Expenses {
+export interface Expens {
   id: string;
   supplierName: string;
   description: string;
@@ -59,7 +59,7 @@ export interface Expenses {
   amount: number;
 }
 
-export interface BookingReport {
+export interface ReportBooking {
   id: string;
   roomType: string;
   from: Date;

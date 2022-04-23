@@ -213,133 +213,133 @@ export const stocks = [
 export const bookings = [
   createDataBooking(
     "AB-001",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-002",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-003",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-004",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-005",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-006",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-007",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-008",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-009",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-010",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-011",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-012",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
   createDataBooking(
     "AB-013",
-    "Abu Bin Ishtiyak",
-    "0868421606",
+    "trungdipdo5@gmail.com",
     "Strater",
     "Active",
     "Super Delux",
     "10 Feb 2020",
-    "Paid"
+    "Paid",
+    "Trung Nguyen"
   ),
 ];
 

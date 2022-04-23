@@ -359,22 +359,10 @@ const headCellsRoom: HeadCell<DataRoom>[] = [
 
 const headCells: HeadCell<DataBooking>[] = [
   {
-    id: "id",
-    numeric: false,
-    disablePadding: true,
-    label: "ID",
-  },
-  {
-    id: "customer",
+    id: "email",
     numeric: false,
     disablePadding: false,
     label: "Customer",
-  },
-  {
-    id: "phone",
-    numeric: false,
-    disablePadding: true,
-    label: "Phone",
   },
   {
     id: "package_p",
@@ -631,7 +619,18 @@ const EnhancedTableToolbarCustom = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
+interface Bookings {
+  id: string;
+  email: string;
+  booking: "Pending" | "Active";
+  package_p: string;
+  roomType: string;
+  arrive: string;
+  payment: "Paid" | "Due";
+  name: string;
+}
+
+export const BookingTable = ({ rows }: { rows: Bookings[] }) => {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof DataBooking>("id");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -769,21 +768,14 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
                           }}
                         />
                       </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.id}
-                      </TableCell>
+                     
                       <TableCell align="right">
                         <div className="flex items-center space-x-1">
                           <div>
                             <Avatar
                               className=""
                               {...stringAvatar(
-                                { name: "A A", url: "" },
+                                { name: row.name, url: "" },
                                 {
                                   width: 30,
                                   height: 30,
@@ -803,19 +795,19 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
                               color=""
                               gutterBottom
                             >
-                              {row.customer}
+                              {row.name}
                             </Typography>
                             <Typography
                               sx={{ fontSize: 11, margin: "4px 0 0 0" }}
                               color="text.secondary"
                               gutterBottom
                             >
-                              info@softnio.com
+                              {row.email}
                             </Typography>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell align="center">{row.phone}</TableCell>
+
                       <TableCell align="center">{row.package_p}</TableCell>
                       <TableCell align="center">{row.booking}</TableCell>
                       <TableCell align="center">{row.roomType}</TableCell>

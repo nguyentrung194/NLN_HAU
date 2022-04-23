@@ -1,12 +1,13 @@
 import { model, Schema, Document } from 'mongoose';
+import { v4 } from 'uuid';
 import {
   Booking,
   Room,
   RoomType,
   Stock,
   User,
-  Expenses,
-  BookingReport,
+  Expens,
+  ReportBooking,
   Invoices,
   Item,
 } from '@/interfaces/interface';
@@ -14,8 +15,8 @@ import {
 const userSchema: Schema<User> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   email: {
     type: String,
@@ -44,8 +45,15 @@ const userSchema: Schema<User> = new Schema({
   },
   roles: {
     type: Array<String>(),
-    require,
     default: ['User'],
+  },
+  lastPackage: {
+    type: Array<String>(),
+    default: [],
+  },
+  lastCheckOut: {
+    type: Array<String>(),
+    default: [],
   },
 });
 
@@ -54,8 +62,8 @@ export const userModel = model<User & Document>('User', userSchema);
 const bookingSchema: Schema<Booking> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   customerId: {
     type: String,
@@ -90,8 +98,8 @@ export const bookingModel = model<Booking & Document>('Booking', bookingSchema);
 const roomSchema: Schema<Room> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   no: {
     type: String,
@@ -128,8 +136,8 @@ export const roomModel = model<Room & Document>('Room', roomSchema);
 const roomTypeSchema: Schema<RoomType> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   name: {
     type: String,
@@ -163,8 +171,8 @@ export const roomTypeModel = model<RoomType & Document>('RoomType', roomTypeSche
 const stockSchema: Schema<Stock> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   productName: {
     type: String,
@@ -190,11 +198,11 @@ const stockSchema: Schema<Stock> = new Schema({
 
 export const stockModel = model<Stock & Document>('Stock', stockSchema);
 
-const expensesSchema: Schema<Expenses> = new Schema({
+const expensSchema: Schema<Expens> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   supplierName: {
     type: String,
@@ -215,13 +223,13 @@ const expensesSchema: Schema<Expenses> = new Schema({
   },
 });
 
-export const expensesModel = model<Expenses & Document>('Expenses', expensesSchema);
+export const expensModel = model<Expens & Document>('Expens', expensSchema);
 
-const bookingReportSchema: Schema<BookingReport> = new Schema({
+const reportBookingSchema: Schema<ReportBooking> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   roomType: {
     type: String,
@@ -243,16 +251,16 @@ const bookingReportSchema: Schema<BookingReport> = new Schema({
   },
 });
 
-export const bookingReportModel = model<BookingReport & Document>(
-  'BookingReport',
-  bookingReportSchema,
+export const reportBookingModel = model<ReportBooking & Document>(
+  'ReportBooking',
+  reportBookingSchema,
 );
 
 const invoicesSchema: Schema<Invoices> = new Schema({
   id: {
     type: String,
-    require,
     unique: true,
+    default: v4(),
   },
   date: {
     type: Date,

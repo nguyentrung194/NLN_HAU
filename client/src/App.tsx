@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { RegisterRoute } from "./route/register.route";
 import { LoginRoute } from "./route/login.route";
 import { NavLayout } from "./layouts/nav";
-import { PhongContext, PhongContextProvider } from "./contexts/reducer";
+import { PhongContext, PhongContextProvider } from "./contexts/context";
 import "./styles/index.css";
 import { HomeRoute } from "./route/home.route";
 // import { DetailsHotelRoute } from "./route/details-hotel.route";

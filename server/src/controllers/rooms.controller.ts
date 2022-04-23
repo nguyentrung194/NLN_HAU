@@ -1,71 +1,61 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
-import { User } from '@/interfaces/interface';
+import { CreateRoomDto } from '@dtos/rooms.dto';
+import { Room } from '@/interfaces/interface';
 import roomsService from '@services/rooms.service';
 
 class RoomsController {
   public roomsService = new roomsService();
 
-  public getUsers = async (req: Request, res: Response, next: NextFunction) => {
+  public getRooms = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllUsersData: User[] = await this.roomsService.findAllUser();
+      const findAllRoomsData: Room[] = await this.roomsService.findAllRoom();
 
-      res.status(200).json({ data: findAllUsersData, message: 'findAll' });
+      res.status(200).json({ data: findAllRoomsData, message: 'findAll' });
     } catch (error) {
       next(error);
     }
   };
 
-  public getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  public getRoomById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
-      res.status(200).json({
-        data: {
-          id: userId,
-          no: userId,
-          roomType: 'Single',
-          AC: 'AC',
-          meal: 'none',
-          bedCapacity: '2',
-          rent: '32',
-          status: 'Open',
-        },
-        message: 'findOne',
-      });
+      const roomId: string = req.params.id;
+      const findOneRoomData: Room = await this.roomsService.findRoomById(roomId);
+
+      res.status(200).json({ data: findOneRoomData, message: 'findOne' });
     } catch (error) {
       next(error);
     }
   };
 
-  public createUser = async (req: Request, res: Response, next: NextFunction) => {
+  public createRoom = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userData: CreateUserDto = req.body;
-      const createUserData: User = await this.roomsService.createUser(userData);
+      const roomData: CreateRoomDto = req.body;
+      const createRoomData: Room = await this.roomsService.createRoom(roomData);
 
-      res.status(201).json({ data: createUserData, message: 'created' });
+      res.status(201).json({ data: createRoomData, message: 'created' });
     } catch (error) {
       next(error);
     }
   };
 
-  public updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  public updateRoom = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
-      const userData: CreateUserDto = req.body;
-      const updateUserData: User = await this.roomsService.updateUser(userId, userData);
+      const roomId: string = req.params.id;
+      const roomData: CreateRoomDto = req.body;
+      const updateRoomData: Room = await this.roomsService.updateRoom(roomId, roomData);
 
-      res.status(200).json({ data: updateUserData, message: 'updated' });
+      res.status(200).json({ data: updateRoomData, message: 'updated' });
     } catch (error) {
       next(error);
     }
   };
 
-  public deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+  public deleteRoom = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId: string = req.params.id;
-      const deleteUserData: User = await this.roomsService.deleteUser(userId);
+      const roomId: string = req.params.id;
+      const deleteRoomData: Room = await this.roomsService.deleteRoom(roomId);
 
-      res.status(200).json({ data: deleteUserData, message: 'deleted' });
+      res.status(200).json({ data: deleteRoomData, message: 'deleted' });
     } catch (error) {
       next(error);
     }
