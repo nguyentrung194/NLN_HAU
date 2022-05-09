@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import RoomsController from '@controllers/rooms.controller';
-import { CreateRoomDto } from '@dtos/rooms.dto';
+import RoomsController from '@/controllers/rooms.controller';
+import { CreateRoomDto } from '@/dtos/rooms.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
 import authMiddlewareAdmin from '@/middlewares/auth.middleware.admin';
@@ -15,23 +15,24 @@ class RoomsRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.roomsController.getRooms);
+    // this.router.get(`${this.path}`, this.roomsController.getRooms);
+    this.router.get(`${this.path}`, this.roomsController.getRoomsByFilter);
     this.router.get(`${this.path}/:id`, this.roomsController.getRoomById);
     this.router.post(
       `${this.path}`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       validationMiddleware(CreateRoomDto, 'body'),
       this.roomsController.createRoom,
     );
     this.router.put(
       `${this.path}/:id`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       validationMiddleware(CreateRoomDto, 'body', true),
       this.roomsController.updateRoom,
     );
     this.router.delete(
       `${this.path}/:id`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       this.roomsController.deleteRoom,
     );
   }

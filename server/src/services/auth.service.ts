@@ -7,6 +7,7 @@ import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import { User } from '@/interfaces/interface';
 import { userModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
+import { v4 } from 'uuid';
 
 class AuthService {
   public users = userModel;
@@ -22,6 +23,7 @@ class AuthService {
     const createUserData: User = await this.users.create({
       ...userData,
       password: hashedPassword,
+      id: v4(),
     });
 
     return createUserData;

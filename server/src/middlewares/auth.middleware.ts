@@ -16,7 +16,7 @@ const authMiddleware = async (
       (req.header('Authorization')
         ? req.header('Authorization').split('Bearer ')[1]
         : null);
-
+    console.log(Authorization);
     if (Authorization) {
       const secretKey: string = SECRET_KEY;
       const verificationResponse = (await verify(

@@ -1,46 +1,92 @@
-export const PhongReducer = (state: any, action: any) => {
+const Storage = (cartItems: any) => {
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cartItems.length > 0 ? cartItems : [])
+  );
+};
+
+export const sumItems = (cartItems: any) => {
+  Storage(cartItems);
+  let itemCount = cartItems.reduce(
+    (total: number, product: any) => total + product.soluong,
+    0
+  );
+  let total = cartItems.reduce(
+    (total: number, product: any) =>
+      total +
+      product.price * product.soluong * ((100 - (product?.saleOff || 0)) / 100),
+    0
+  );
+  return { itemCount, total };
+};
+
+export const Reducer = (state: any, action: any) => {
   switch (action.type) {
-    case "ADD_KHU":
+    case "LOGIN":
       return {
         ...state,
-        khus: [...state.khus, action.payload.khu],
+        ...sumItems(state.cartItems),
+        isLogin: action.payload.isLogin,
+        isAdmin: action.payload.isAdmin || false,
       };
-    case "EDIT_KHU":
+
+    case "ADD_ITEM":
+      if (!state.cartItems.find((item: any) => item.id === action.payload.id)) {
+        state.cartItems.push({
+          ...action.payload,
+          soluong: 1,
+        });
+      }
+
       return {
         ...state,
-        khus: [
-          ...state.khus.map((el: any) => {
-            if (action.payload.khu.id === el.id) {
-              return { ...el, ...action.payload.khu };
-            } else return el;
-          }),
+        ...sumItems(state.cartItems),
+        cartItems: [...state.cartItems],
+      };
+    case "REMOVE_ITEM":
+      return {
+        ...state,
+        ...sumItems(
+          state.cartItems.filter((item: any) => item.id !== action.payload.id)
+        ),
+        cartItems: [
+          ...state.cartItems.filter(
+            (item: any) => item.id !== action.payload.id
+          ),
         ],
       };
-    case "SET_PHONG":
+    case "INCREASE":
+      state.cartItems[
+        state.cartItems.findIndex((item: any) => item.id === action.payload.id)
+      ].soluong++;
       return {
         ...state,
-        phong: action.payload.phong,
+        ...sumItems(state.cartItems),
+        cartItems: [...state.cartItems],
       };
-    case "SET_PHONGS":
+    case "DECREASE":
+      let index = state.cartItems.findIndex(
+        (item: any) => item.id === action.payload.id
+      );
+      state.cartItems[index].soluong--;
+      let newCartItems = [
+        ...state.cartItems.filter((item: any) => item.soluong > 0),
+      ];
       return {
         ...state,
-        phongs: action.payload.phongs,
+        ...sumItems(newCartItems),
+        cartItems: [...newCartItems],
       };
-    case "FIND_HOTELS":
+    case "CHECKOUT":
       return {
-        ...state,
-        hotels_filter: state.khus.filter(function (item: any) {
-          for (var key in action.payload.filter) {
-            if (action.payload.filter[key]) {
-              if (
-                item[key] === undefined ||
-                !(item[key].match(new RegExp(action.payload.filter[key] + "*")))
-              )
-                return false;
-            }
-          }
-          return true;
-        }),
+        cartItems: [],
+        checkout: true,
+        ...sumItems([]),
+      };
+    case "CLEAR":
+      return {
+        cartItems: [],
+        ...sumItems([]),
       };
     default:
       return state;

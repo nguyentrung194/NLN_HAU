@@ -10,13 +10,9 @@ import {
   AreaSeries,
   Legend,
   LineSeries,
-  SplineSeries,
 } from "@devexpress/dx-react-chart-material-ui";
-import { scaleBand } from "@devexpress/dx-chart-core";
 import {
-  ArgumentScale,
   Palette,
-  Stack,
   EventTracker,
 } from "@devexpress/dx-react-chart";
 

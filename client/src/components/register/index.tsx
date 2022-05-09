@@ -1,64 +1,60 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import axios from "axios";
+import {
+  Card,
+  CardContent,
+  Box,
+  FormControl,
+  TextField,
+  Button,
+  CardMedia,
+} from "@mui/material";
+import * as React from "react";
 import { useFormik } from "formik";
-import React, { useContext } from "react";
 import { useToasts } from "react-toast-notifications";
+import axios from "axios";
 import environment from "../../config";
-// import { UserContext } from "../../contexts/reducer";
-import { ReactComponent as LoadingLogo } from "../../assets/icons/loading.svg";
+import { storage } from "../../hooks/use-firebase";
 
 export const Register = () => {
-  // const { register } = useContext(UserContext);
-
   const { addToast } = useToasts();
+
   const formik = useFormik({
     initialValues: {
       name: "",
-      username: "",
-      msnv: "",
+      email: "",
+      phone: "",
       password: "",
-      confirmPassword: "",
+      image: "",
     },
     onSubmit: async (values) => {
       try {
         formik.setSubmitting(true);
-
         // code there
         axios({
           url: `${environment.api}signup`,
           method: "POST",
           data: {
-            name: values.name,
-            username: values.username,
-            msnv: values.msnv,
-            password: values.password,
-            books: [],
+            ...values,
           },
         })
-          .then(({ data: { data } }) => {
-            console.log(data);
-            // register({
-            //   isLogin: true,
-            //   name: data.name,
-            //   username: data.username,
-            //   msnv: data.msnv,
-            //   user_id: data._id,
-            // });
-            addToast("Register success!", {
+          .then(({ data }) => {
+            // Handle success
+            addToast(`Success`, {
               appearance: "success",
               autoDismiss: true,
             });
           })
           .catch((err) => {
             console.log(err);
-            addToast("Dang ky khong thanh cong!", {
+            // Handle error
+            addToast("Error!!", {
               appearance: "error",
               autoDismiss: true,
             });
           });
         formik.setSubmitting(false);
       } catch (error) {
-        addToast("Ban hay thu kiem tra lai duong truyen!", {
+        // Handle error
+        addToast("Error!!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -68,93 +64,133 @@ export const Register = () => {
     },
   });
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={formik.handleSubmit}
-      >
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Họ tên:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="name"
-            type="text"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-          />
+    <div className="bg-gray-200/40 -mt-4 pt-4 min-h-screen">
+      <div className="flex justify-between items-center px-6 pt-6">
+        <div className="">
+          <h3 className="text-3xl leading-none font-bold font-serif">
+            Register
+          </h3>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Mã số nhan viên:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="msnv"
-            type="text"
-            value={formik.values.msnv}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Username:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="username"
-            type="text"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Mat khau:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Xac nhan lai mat khau:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="confirmPassword"
-            type="password"
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="pb-8 w-64">
-          <button
-            className="py-6 my-2 text-lg font-bold cursor-pointer transition-all duration-300 
-            delay-75 rounded-full appearance-none flex items-center justify-center flex-shrink-0
-            text-center no-underline text-white bg-blue-400 h-12 w-full disabled:opacity-50
-            hover:bg-blue-700 active:bg-blue-300 shadow-xl"
-            disabled={formik.isSubmitting}
-            type="submit"
-          >
-            {formik.isSubmitting ? (
-              <LoadingLogo className="w-7 animate-spin" />
-            ) : (
-              "Đăng ký"
-            )}
-          </button>
-        </div>
-      </form>
+      </div>
+      <div className="p-6">
+        <Card sx={{ minWidth: 0, height: "100%" }}>
+          <CardContent>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1 },
+              }}
+              noValidate
+              autoComplete="off"
+              onSubmit={formik.handleSubmit}
+              className="grid grid-cols-3 gap-3"
+            >
+              <div className="col-span-1 row-span-2 flex items-start flex-col">
+                {formik.values.image ? (
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    sx={{ maxWidth: 100 }}
+                    image={`${formik.values.image}`}
+                    alt="green iguana"
+                  />
+                ) : (
+                  ""
+                )}
+                <div className="flex items-center">
+                  <label className="h-full cursor-pointer border px-3 py-1.5 flex items-center justify-center w-full text-center hover:bg-slate-100 rou custom-file-upload">
+                    <input
+                      aria-label="File browser"
+                      className="hidden"
+                      name="image"
+                      type="file"
+                      accept="image/png,image/jpeg,image/jpg"
+                      onChange={(e) => {
+                        console.log(storage);
+                        formik.setSubmitting(true);
+                        const uploadFiles = Array.from(
+                          e.target.files as FileList
+                        ).map(async (file: File) => {
+                          const storageRef = storage.ref();
+                          const ref = storageRef.child(
+                            `users/profile/${file.name}`
+                          );
+                          const metadata = {
+                            size: file.size,
+                            contentType: file.type,
+                            name: file.name,
+                          };
+                          await ref.put(file, metadata);
+                          const assetUrl = await ref.getDownloadURL();
+                          formik.setSubmitting(false);
+                          return { ...metadata, assetUrl };
+                        });
+                        console.log(uploadFiles);
+                        Promise.all(uploadFiles)
+                          .then(async (result) => {
+                            formik.setFieldValue("image", result[0].assetUrl);
+                          })
+                          .catch((error) => {
+                            console.log(error.message);
+                          });
+                      }}
+                    />
+                    Upload Photo
+                  </label>
+                </div>
+              </div>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Name"
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  label="Name"
+                  name="name"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  label="Email"
+                  name="email"
+                  autoComplete="off"
+                  type="email"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  label="Password"
+                  autoComplete="off"
+                  name="password"
+                  type="password"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="phone"
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  label="phone"
+                  name="phone"
+                  autoComplete="off"
+                  required
+                />
+              </FormControl>
+              <Button type="submit" variant="contained">
+                Register
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -12,4 +12,16 @@ export class CreateUserDto {
 
   @IsString()
   public password: string;
+
+  @IsString()
+  public image: string;
+
+  @IsString()
+  public verified: string;
+
+  @IsString()
+  public group: string;
+
+  @IsArray()
+  public roles: Array<string>;
 }

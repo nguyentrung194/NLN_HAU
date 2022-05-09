@@ -1,24 +1,25 @@
+import { Review } from '@/interfaces/interface';
 import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @IsString()
-  public no: string;
+  public room_no: string;
 
   @IsString()
-  public roomType: string;
+  public room_type: string;
 
   @IsString()
-  AC: 'AC' | 'none';
+  public description: string;
+
+  @IsNumber()
+  public rent: number;
 
   @IsArray()
-  meal: Array<string>;
+  public images: Array<string>;
 
-  @IsNumber()
-  bedCapacity: number;
-
-  @IsNumber()
-  rent: number;
+  @IsArray()
+  public reviews: Array<Review>;
 
   @IsString()
-  status: 'Booked' | 'Pending' | 'Open';
+  public status: string;
 }

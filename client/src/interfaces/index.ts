@@ -1,23 +1,66 @@
-export interface Books {
-  _id: any;
+export interface DataCustomer {
+  id: string;
   name: string;
-  maso: string;
-  image: any;
-  available?: boolean;
-  user_id?: string;
+  email: string;
+  phone: string;
+  image: string;
+  password: string;
+  verified: string;
+  group: string;
+  roles: string;
+  created_at: string;
+  updated_at: string;
 }
 
-export interface UserState {
-  user_id?: any;
-  books: any[];
-  book: Books;
-  isLogin: boolean;
+export interface DataProduct {
+  id: string;
   name: string;
-  mssv: string;
-  email: string;
-  login?: any;
-  register?: any;
-  logout?: any;
-  setBooks?: any;
-  setBook?: any;
+  quantity: number;
+  description: string;
+  categories: string;
+  unit: string;
+  price: number;
+  images: string;
+  reviews: string;
+  countReviews: number;
+  avgStar: number;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DataCategory {
+  id: string;
+  name: string;
+  image: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DataBooking {
+  id: string;
+  name: string;
+  image: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Client {
+  id: string;
+}
+
+export interface Item {
+  id: string;
+  quantity: number;
+}
+
+export interface DataOrder {
+  id: string;
+  user: string;
+  products: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
 }

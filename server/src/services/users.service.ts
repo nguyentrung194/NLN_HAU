@@ -4,6 +4,7 @@ import { HttpException } from '@exceptions/HttpException';
 import { User } from '@/interfaces/interface';
 import { userModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
+import { v4 } from 'uuid';
 
 class UserService {
   public users = userModel;
@@ -33,6 +34,7 @@ class UserService {
     const createUserData: User = await this.users.create({
       ...userData,
       password: hashedPassword,
+      id: v4(),
     });
 
     return createUserData;
@@ -52,14 +54,17 @@ class UserService {
       userData = { ...userData, password: hashedPassword };
     }
 
-    const updateUserById: User = await this.users.findByIdAndUpdate(userId, { userData });
+    const updateUserById: User = await this.users.findOneAndUpdate(
+      { id: userId },
+      userData,
+    );
     if (!updateUserById) throw new HttpException(409, "You're not user");
 
     return updateUserById;
   }
 
   public async deleteUser(userId: string): Promise<User> {
-    const deleteUserById: User = await this.users.findByIdAndDelete(userId);
+    const deleteUserById: User = await this.users.findOneAndDelete({ id: userId });
     if (!deleteUserById) throw new HttpException(409, "You're not user");
 
     return deleteUserById;

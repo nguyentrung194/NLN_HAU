@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import BookingsController from '@controllers/bookings.controller';
-import { CreateBookingDto } from '@dtos/bookings.dto';
+import BookingsController from '@/controllers/bookings.controller';
+import { CreateBookingDto } from '@/dtos/bookings.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
 import authMiddlewareAdmin from '@/middlewares/auth.middleware.admin';
@@ -15,27 +15,23 @@ class BookingsRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(
-      `${this.path}`,
-      authMiddlewareAdmin,
-      this.bookingsController.getBookings,
-    );
+    this.router.get(`${this.path}`, this.bookingsController.getBookings);
     this.router.get(`${this.path}/:id`, this.bookingsController.getBookingById);
     this.router.post(
       `${this.path}`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       validationMiddleware(CreateBookingDto, 'body'),
       this.bookingsController.createBooking,
     );
     this.router.put(
       `${this.path}/:id`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       validationMiddleware(CreateBookingDto, 'body', true),
       this.bookingsController.updateBooking,
     );
     this.router.delete(
       `${this.path}/:id`,
-      authMiddlewareAdmin,
+      // authMiddlewareAdmin,
       this.bookingsController.deleteBooking,
     );
   }

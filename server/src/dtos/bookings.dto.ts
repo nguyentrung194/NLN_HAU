@@ -1,21 +1,16 @@
-import { IsDate, IsString } from 'class-validator';
+import { Client, Item } from '@/interfaces/interface';
+import { IsObject, IsString } from 'class-validator';
 
 export class CreateBookingDto {
-  @IsString()
-  public email: string;
+  @IsObject()
+  public user: Client;
+
+  @IsObject()
+  public room: Item;
 
   @IsString()
-  public booking: string;
+  public note: string;
 
   @IsString()
-  public package_p: string;
-
-  @IsString()
-  public roomType: string;
-
-  @IsDate()
-  public arrive: Date;
-
-  @IsString()
-  public payment: string;
+  public status: string;
 }

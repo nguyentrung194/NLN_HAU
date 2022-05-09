@@ -1,14 +1,31 @@
-import { CreateBookingDto } from '@dtos/bookings.dto';
+import { CreateBookingDto } from '@/dtos/bookings.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { Booking } from '@/interfaces/interface';
 import { bookingModel } from '@/models/model';
 import { isEmpty } from '@utils/util';
+import { v4 } from 'uuid';
 
 class BookingService {
   public bookings = bookingModel;
 
   public async findAllBooking(): Promise<Booking[]> {
-    const bookings: Booking[] = await this.bookings.find();
+    const bookings: Booking[] = await this.bookings.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user.id',
+          foreignField: 'id',
+          as: 'user',
+        },
+      },
+      {
+        $project: {
+          'user.password': false,
+          'user._id': false,
+          'user.__v': false,
+        },
+      },
+    ]);
     return bookings;
   }
 
@@ -26,6 +43,7 @@ class BookingService {
 
     const createBookingData: Booking = await this.bookings.create({
       ...bookingData,
+      id: v4(),
     });
 
     return createBookingData;
@@ -37,16 +55,19 @@ class BookingService {
   ): Promise<Booking> {
     if (isEmpty(bookingData)) throw new HttpException(400, "You're not bookingData");
 
-    const updateBookingById: Booking = await this.bookings.findByIdAndUpdate(bookingId, {
+    const updateBookingById: Booking = await this.bookings.findOneAndUpdate(
+      { id: bookingId },
       bookingData,
-    });
+    );
     if (!updateBookingById) throw new HttpException(409, "You're not booking");
 
     return updateBookingById;
   }
 
   public async deleteBooking(bookingId: string): Promise<Booking> {
-    const deleteBookingById: Booking = await this.bookings.findByIdAndDelete(bookingId);
+    const deleteBookingById: Booking = await this.bookings.findOneAndDelete({
+      id: bookingId,
+    });
     if (!deleteBookingById) throw new HttpException(409, "You're not booking");
 
     return deleteBookingById;

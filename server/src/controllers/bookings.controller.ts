@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { CreateBookingDto } from '@dtos/bookings.dto';
 import { Booking } from '@/interfaces/interface';
-import bookingService from '@services/bookings.service';
+import bookingsService from '@/services/bookings.service';
 
 class BookingsController {
-  public bookingService = new bookingService();
+  public bookingsService = new bookingsService();
 
   public getBookings = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const findAllBookingsData: Booking[] = await this.bookingService.findAllBooking();
+      const findAllBookingsData: Booking[] = await this.bookingsService.findAllBooking();
 
       res.status(200).json({ data: findAllBookingsData, message: 'findAll' });
     } catch (error) {
@@ -19,7 +19,7 @@ class BookingsController {
   public getBookingById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const bookingId: string = req.params.id;
-      const findOneBookingData: Booking = await this.bookingService.findBookingById(
+      const findOneBookingData: Booking = await this.bookingsService.findBookingById(
         bookingId,
       );
 
@@ -32,7 +32,7 @@ class BookingsController {
   public createBooking = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const bookingData: CreateBookingDto = req.body;
-      const createBookingData: Booking = await this.bookingService.createBooking(
+      const createBookingData: Booking = await this.bookingsService.createBooking(
         bookingData,
       );
 
@@ -46,7 +46,7 @@ class BookingsController {
     try {
       const bookingId: string = req.params.id;
       const bookingData: CreateBookingDto = req.body;
-      const updateBookingData: Booking = await this.bookingService.updateBooking(
+      const updateBookingData: Booking = await this.bookingsService.updateBooking(
         bookingId,
         bookingData,
       );
@@ -60,7 +60,7 @@ class BookingsController {
   public deleteBooking = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const bookingId: string = req.params.id;
-      const deleteBookingData: Booking = await this.bookingService.deleteBooking(
+      const deleteBookingData: Booking = await this.bookingsService.deleteBooking(
         bookingId,
       );
 

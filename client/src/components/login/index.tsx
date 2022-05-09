@@ -1,59 +1,68 @@
-import axios from "axios";
+import {
+  Card,
+  CardContent,
+  Box,
+  FormControl,
+  TextField,
+  Button,
+} from "@mui/material";
+import * as React from "react";
 import { useFormik } from "formik";
-import React, { useContext } from "react";
 import { useToasts } from "react-toast-notifications";
+import axios from "axios";
 import environment from "../../config";
-// import { UserContext } from "../../contexts/reducer";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../contexts/context";
 
 export const Login = () => {
-  // const { login } = useContext(UserContext);
   const { addToast } = useToasts();
+  const navigate = useNavigate();
+  const { login } = React.useContext(Context);
+
   const formik = useFormik({
     initialValues: {
+      email: "",
       password: "",
-      username: "",
     },
     onSubmit: async (values) => {
       try {
         formik.setSubmitting(true);
-
         // code there
         axios({
           url: `${environment.api}login`,
           method: "POST",
           data: {
-            username: values.username,
-            password: values.password,
+            ...values,
           },
           withCredentials: true,
         })
-          .then((res) => {
-            console.log(res);
-            return res;
-          })
-          .then(({ data: { data } }) => {
-            // login({
-            //   isLogin: true,
-            //   name: data.name,
-            //   username: data.username,
-            //   mssv: data.mssv,
-            //   user_id: data._id,
-            // });
-            addToast(`Wellcome`, {
+          .then(({ data }) => {
+            // Handle success
+            console.log(data);
+            if (data.data.roles.includes("Admin")) {
+              login({ isLogin: true, isAdmin: true });
+              navigate("/admin");
+            } else {
+              login({ isLogin: true, isAdmin: false });
+              navigate("/home");
+            }
+            addToast(`Success`, {
               appearance: "success",
               autoDismiss: true,
             });
           })
           .catch((err) => {
             console.log(err);
-            addToast("Dang nhap khong thanh cong!", {
+            // Handle error
+            addToast("Error!!", {
               appearance: "error",
               autoDismiss: true,
             });
           });
         formik.setSubmitting(false);
       } catch (error) {
-        addToast("Ban hay kiem tra lai duong truyen!", {
+        // Handle error
+        addToast("Error!!", {
           appearance: "error",
           autoDismiss: true,
         });
@@ -63,50 +72,54 @@ export const Login = () => {
     },
   });
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={formik.handleSubmit}
-      >
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Username:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="username"
-            type="text"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-          />
+    <div className="bg-gray-200/40 -mt-4 pt-4 min-h-screen">
+      <div className="flex justify-between items-center px-6 pt-6">
+        <div className="">
+          <h3 className="text-3xl leading-none font-bold font-serif">Login</h3>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Password:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            required
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="pb-8 w-64">
-          <button
-            className="py-6 my-2 text-lg font-bold cursor-pointer transition-all duration-300 
-            delay-75 rounded-full appearance-none flex items-center justify-center flex-shrink-0
-            text-center no-underline text-white bg-blue-400 h-12 w-full disabled:opacity-50
-            hover:bg-blue-700 active:bg-blue-300 shadow-xl"
-            disabled={formik.isSubmitting}
-            type="submit"
-          >
-            Đăng nhập
-          </button>
-        </div>
-      </form>
+      </div>
+      <div className="p-6">
+        <Card sx={{ minWidth: 0, height: "100%" }}>
+          <CardContent>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1 },
+              }}
+              noValidate
+              autoComplete="off"
+              onSubmit={formik.handleSubmit}
+              className="grid grid-cols-3 gap-3"
+            >
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  label="Email"
+                  name="email"
+                  type="email"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  label="Password"
+                  name="password"
+                  type="password"
+                  required
+                />
+              </FormControl>
+              <Button type="submit" variant="contained">
+                Login
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -4,82 +4,59 @@ export interface User {
   email: string;
   phone: string;
   password: string;
-  lastPackage: Array<string>;
-  verified: 'Active' | 'Deactive';
-  lastCheckOut: Array<string>;
-  group: 'Basic' | 'Silver' | 'Gold' | 'Platinum' | 'Dimond';
+  image: string;
+  verified: string;
+  group: string;
   roles: Array<string>;
+  created_at: Date;
+  updated_at: Date;
 }
 
-export interface Booking {
+export interface Review {
   id: string;
-  email: string;
-  booking: 'Pending' | 'Active';
-  package_p: string;
-  roomType: string;
-  arrive: Date;
-  payment: 'Paid' | 'Due';
+  content: string;
+  star: number;
 }
 
 export interface Room {
   id: string;
-  no: string;
-  roomType: string;
-  AC: 'AC' | 'none';
-  meal: Array<string>;
-  bedCapacity: number;
+  room_no: string;
+  room_type: string;
+  description: string;
   rent: number;
-  status: 'Booked' | 'Pending' | 'Open';
+  images: Array<string>;
+  reviews: Array<Review>;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface RoomType {
   id: string;
   name: string;
   rent: number;
-  shortCode: string;
-  noOfRoom: number;
-  type: string;
-  status: 'Active' | 'Inactive';
+  short_code: string;
+  no_of_room: number;
+  type_star: number;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
-export interface Stock {
+export interface Client {
   id: string;
-  productName: string;
-  quantity: number;
-  price: number;
-  unit: string;
-  status: 'Available' | 'Low' | 'Out of Stock';
-}
-
-export interface Expens {
-  id: string;
-  supplierName: string;
-  description: string;
-  date: Date;
-  amount: number;
-}
-
-export interface ReportBooking {
-  id: string;
-  roomType: string;
-  from: Date;
-  to: Date;
-  totalAmount: number;
 }
 
 export interface Item {
   id: string;
-  description: string;
-  price: number;
-  QTY: number;
-  amount: number;
 }
 
-export interface Invoices {
+export interface Booking {
   id: string;
-  date: Date;
-  amount: number;
-  status: 'Complete' | 'Pending';
-  items: Array<Item>;
-  total: number;
+  user: Client;
+  room: Item;
+  note: string;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
 }
