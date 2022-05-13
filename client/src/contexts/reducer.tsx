@@ -28,6 +28,7 @@ export const Reducer = (state: any, action: any) => {
         ...sumItems(state.cartItems),
         isLogin: action.payload.isLogin,
         isAdmin: action.payload.isAdmin || false,
+        user: action.payload.user || {},
       };
 
     case "ADD_ITEM":

@@ -11,6 +11,7 @@ const initialState = {
   ...sumItems(storage),
   isLogin: false,
   isAdmin: false,
+  user: {},
 };
 
 export const ContextProvider = ({ children }: any) => {
