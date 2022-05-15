@@ -43,7 +43,7 @@ export const Login = () => {
               login({ isLogin: true, isAdmin: true, user: data.data });
               navigate("/admin");
             } else {
-              login({ isLogin: true, isAdmin: true, user: data.data });
+              login({ isLogin: true, isAdmin: false, user: data.data });
               navigate("/home");
             }
             addToast(`Success`, {

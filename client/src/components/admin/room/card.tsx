@@ -32,7 +32,7 @@ import { MenuCustom, FilterCustom } from "../common/menu";
 import { visuallyHidden } from "@mui/utils";
 import { SelectFilter } from "../common/common";
 
-import { DataCategory } from "../../../interfaces";
+import { DataRoom } from "../../../interfaces";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -83,31 +83,62 @@ interface HeadCell<T> {
   disableSort?: boolean;
 }
 
-const headCellsCategory: HeadCell<DataCategory>[] = [
+const headCellsRoom: HeadCell<DataRoom>[] = [
   {
     id: "id",
     numeric: false,
-    disablePadding: true,
-    label: "ID",
-  },
-  {
-    id: "name",
-    numeric: false,
-    disablePadding: false,
-    label: "Name",
-  },
-  {
-    id: "image",
-    numeric: true,
-    disablePadding: true,
-    label: "Image",
     disableSort: true,
+    disablePadding: true,
+    label: "id",
+  },
+  {
+    id: "room_no",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "room_no",
+  },
+  {
+    id: "room_type",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "room_type",
+  },
+  {
+    id: "description",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "description",
+  },
+  {
+    id: "rent",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "rent",
+  },
+  {
+    id: "images",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "images",
+  },
+  {
+    id: "reviews",
+    numeric: false,
+    disableSort: true,
+    disablePadding: true,
+    label: "reviews",
   },
   {
     id: "status",
     numeric: false,
+    disableSort: true,
     disablePadding: true,
-    label: "Status",
+    label: "status",
   },
 ];
 
@@ -163,7 +194,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function EnhancedTableHead(props: EnhancedTableProps<DataCategory>) {
+function EnhancedTableHead(props: EnhancedTableProps<DataRoom>) {
   const {
     onSelectAllClick,
     order,
@@ -174,7 +205,7 @@ function EnhancedTableHead(props: EnhancedTableProps<DataCategory>) {
   } = props;
 
   const createSortHandler =
-    (property: keyof DataCategory) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof DataRoom) => (event: React.MouseEvent<unknown>) => {
       // (property: any) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
@@ -193,7 +224,7 @@ function EnhancedTableHead(props: EnhancedTableProps<DataCategory>) {
             }}
           />
         </TableCell>
-        {props.headCells.map((headCell: HeadCell<DataCategory>, index: any) => (
+        {props.headCells.map((headCell: HeadCell<DataRoom>, index: any) => (
           <TableCell
             key={index}
             align={"center"}
@@ -306,9 +337,9 @@ const EnhancedTableToolbarCustom = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
+export const RoomTable = ({ rows }: { rows: DataRoom[] }) => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof DataCategory>("id");
+  const [orderBy, setOrderBy] = React.useState<keyof DataRoom>("id");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -316,7 +347,7 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof DataCategory
+    property: keyof DataRoom
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -378,17 +409,17 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbarCustom
           numSelected={selected.length}
-          selectOptionsLeft={[{ value: "delete", text: "Delete Categories" }]}
+          selectOptionsLeft={[{ value: "delete", text: "Delete Rooms" }]}
           selectOptions={[
             {
-              key: "Add Category",
-              text: "Add Category",
-              path: `/admin/categories/add-category`,
+              key: "Add Room",
+              text: "Add Room",
+              path: `/admin/rooms/add-room`,
             },
             {
-              key: "Import Category",
-              text: "Import Category",
-              path: `/admin/categories/import-categories`,
+              key: "Import Room",
+              text: "Import Room",
+              path: `/admin/rooms/import-rooms`,
             },
           ]}
           selectOptions1={[
@@ -396,7 +427,7 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
             { value: "active", text: "Active" },
             { value: "deactive", text: "Deactive" },
           ]}
-          title={"Filter Categories"}
+          title={"Filter Rooms"}
         />
         <TableContainer>
           <Table
@@ -405,7 +436,7 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
             size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
-              headCells={headCellsCategory}
+              headCells={headCellsRoom}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -449,23 +480,20 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
                       >
                         {row.id}
                       </TableCell>
-                      <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center" sx={{ maxWidth: 200 }}>
-                        <CardMedia
-                          component="img"
-                          height="140"
-                          image={`${row.image}`}
-                          alt="green iguana"
-                        />
-                      </TableCell>
+                      <TableCell align="center">{row.room_no}</TableCell>
+                      <TableCell align="center">{row.room_type}</TableCell>
+                      <TableCell align="center">{row.description}</TableCell>
+                      <TableCell align="center">{row.rent}</TableCell>
+                      <TableCell align="center">{row.images}</TableCell>
+                      <TableCell align="center">{row.reviews}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <MenuCustom
                           optionsOrder={[
                             {
-                              key: "Edit Category",
-                              text: "Edit Category",
-                              path: `/admin/categories/edit-category/${row.id}`,
+                              key: "Edit Room",
+                              text: "Edit Room",
+                              path: `/admin/rooms/edit-room/${row.id}`,
                             },
                           ]}
                         />
@@ -503,11 +531,11 @@ export const CategoryTable = ({ rows }: { rows: DataCategory[] }) => {
   );
 };
 
-export const CardCategory = (props: any) => {
+export const CardRoom = (props: any) => {
   return (
     <Card sx={{ minWidth: 0, height: "100%" }}>
       <CardContent>
-        <CategoryTable rows={props.values} />
+        <RoomTable rows={props.values} />
       </CardContent>
     </Card>
   );

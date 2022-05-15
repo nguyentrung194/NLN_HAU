@@ -1,9 +1,41 @@
 import * as React from "react";
-import { CardRoomType } from "../common/card";
+import { CardRoomType } from "./card";
 import { Typography } from "@mui/material";
 import { MenuCustomHead } from "../common/menu";
+import axios from "axios";
+import environment from "../../../config";
 
 export const RoomsType = () => {
+  const [roomTypes, setRoomTypes] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      await axios({
+        url: `${environment.api}room_types`,
+        method: "GET",
+        // withCredentials: true,
+      })
+        .then(({ data: { data: roomTypes } }: { data: { data: any[] } }) => {
+          // Handle success
+          setRoomTypes(
+            roomTypes.map((value) => {
+              Object.keys(value).forEach((k: any) => {
+                if (typeof value[k] === "object") {
+                  value[k] = JSON.stringify(value[k]);
+                }
+              });
+              return value;
+            })
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+          // Handle error
+          console.log(err);
+        });
+    }
+    fetchData();
+  }, []);
   return (
     <div className="bg-gray-200/40 -mt-4 pt-4 min-h-screen">
       <div className="flex justify-between items-center px-6 pt-6">
@@ -21,7 +53,7 @@ export const RoomsType = () => {
         </div>
         <div className="flex space-x-2">
           <MenuCustomHead
-            optionsBooking={[
+            options={[
               {
                 key: "1",
                 text: "Add room type",
@@ -37,7 +69,7 @@ export const RoomsType = () => {
         </div>
       </div>
       <div className="p-6">
-        <CardRoomType />
+        <CardRoomType values={roomTypes} />
       </div>
     </div>
   );

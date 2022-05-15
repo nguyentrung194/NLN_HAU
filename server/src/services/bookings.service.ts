@@ -19,6 +19,14 @@ class BookingService {
         },
       },
       {
+        $lookup: {
+          from: 'rooms',
+          localField: 'room.id',
+          foreignField: 'id',
+          as: 'room',
+        },
+      },
+      {
         $project: {
           'user.password': false,
           'user._id': false,

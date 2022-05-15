@@ -32,7 +32,7 @@ import { MenuCustom, FilterCustom } from "../common/menu";
 import { visuallyHidden } from "@mui/utils";
 import { SelectFilter } from "../common/common";
 
-import { DataBooking } from "../../../interfaces";
+import { DataRoomType } from "../../../interfaces";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -83,45 +83,34 @@ interface HeadCell<T> {
   disableSort?: boolean;
 }
 
-const headCellsBooking: HeadCell<DataBooking>[] = [
+const headCellsRoomType: HeadCell<DataRoomType>[] = [
   {
     id: "id",
     numeric: false,
+    disableSort: true,
     disablePadding: true,
-    label: "ID",
+    label: "id",
   },
   {
-    id: "user",
+    id: "name",
     numeric: false,
-    disablePadding: false,
-    label: "User",
     disableSort: true,
+    disablePadding: true,
+    label: "name",
   },
   {
-    id: "room",
-    numeric: true,
-    disablePadding: true,
-    label: "Room",
+    id: "image",
+    numeric: false,
     disableSort: true,
-  },
-  {
-    id: "note",
-    numeric: true,
     disablePadding: true,
-    label: "Note",
-    disableSort: true,
-  },
-  {
-    id: "package_p",
-    numeric: true,
-    disablePadding: true,
-    label: "Package",
+    label: "image",
   },
   {
     id: "status",
     numeric: false,
+    disableSort: true,
     disablePadding: true,
-    label: "Status",
+    label: "status",
   },
 ];
 
@@ -177,7 +166,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function EnhancedTableHead(props: EnhancedTableProps<DataBooking>) {
+function EnhancedTableHead(props: EnhancedTableProps<DataRoomType>) {
   const {
     onSelectAllClick,
     order,
@@ -188,7 +177,7 @@ function EnhancedTableHead(props: EnhancedTableProps<DataBooking>) {
   } = props;
 
   const createSortHandler =
-    (property: keyof DataBooking) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof DataRoomType) => (event: React.MouseEvent<unknown>) => {
       // (property: any) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
@@ -207,7 +196,7 @@ function EnhancedTableHead(props: EnhancedTableProps<DataBooking>) {
             }}
           />
         </TableCell>
-        {props.headCells.map((headCell: HeadCell<DataBooking>, index: any) => (
+        {props.headCells.map((headCell: HeadCell<DataRoomType>, index: any) => (
           <TableCell
             key={index}
             align={"center"}
@@ -320,9 +309,9 @@ const EnhancedTableToolbarCustom = (props: EnhancedTableToolbarProps) => {
   );
 };
 
-export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
+export const RoomTypeTable = ({ rows }: { rows: DataRoomType[] }) => {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof DataBooking>("id");
+  const [orderBy, setOrderBy] = React.useState<keyof DataRoomType>("id");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -330,7 +319,7 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof DataBooking
+    property: keyof DataRoomType
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -392,17 +381,19 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbarCustom
           numSelected={selected.length}
-          selectOptionsLeft={[{ value: "delete", text: "Delete Bookings" }]}
+          selectOptionsLeft={[
+            { value: "delete", text: "Delete RoomTypeTypes" },
+          ]}
           selectOptions={[
             {
-              key: "Add Booking",
-              text: "Add Booking",
-              path: `/admin/bookings/add-booking`,
+              key: "Add RoomType",
+              text: "Add RoomType",
+              path: `/admin/roomTypes/add-roomType`,
             },
             {
-              key: "Import Booking",
-              text: "Import Booking",
-              path: `/admin/bookings/import-bookings`,
+              key: "Import RoomType",
+              text: "Import RoomType",
+              path: `/admin/roomTypes/import-roomTypes`,
             },
           ]}
           selectOptions1={[
@@ -410,7 +401,7 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
             { value: "active", text: "Active" },
             { value: "deactive", text: "Deactive" },
           ]}
-          title={"Filter Bookings"}
+          title={"Filter RoomTypeTypes"}
         />
         <TableContainer>
           <Table
@@ -419,7 +410,7 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
             size={dense ? "small" : "medium"}
           >
             <EnhancedTableHead
-              headCells={headCellsBooking}
+              headCells={headCellsRoomType}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -463,18 +454,16 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
                       >
                         {row.id}
                       </TableCell>
-                      <TableCell align="center">{row.user}</TableCell>
-                      <TableCell align="center">{row.room}</TableCell>
-                      <TableCell align="center">{row.note}</TableCell>
-                      <TableCell align="center">{row.package_p}</TableCell>
+                      <TableCell align="center">{row.name}</TableCell>
+                      <TableCell align="center">{row.image}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <MenuCustom
                           optionsOrder={[
                             {
-                              key: "Edit Booking",
-                              text: "Edit Booking",
-                              path: `/admin/bookings/edit-booking/${row.id}`,
+                              key: "Edit RoomType",
+                              text: "Edit RoomType",
+                              path: `/admin/roomTypes/edit-roomType/${row.id}`,
                             },
                           ]}
                         />
@@ -512,11 +501,11 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
   );
 };
 
-export const CardBooking = (props: any) => {
+export const CardRoomType = (props: any) => {
   return (
     <Card sx={{ minWidth: 0, height: "100%" }}>
       <CardContent>
-        <BookingTable rows={props.values} />
+        <RoomTypeTable rows={props.values} />
       </CardContent>
     </Card>
   );

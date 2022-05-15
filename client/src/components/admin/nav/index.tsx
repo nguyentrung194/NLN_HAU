@@ -116,25 +116,9 @@ const navs = [
     ],
   },
   {
-    name: "Reports",
-    to: "/reports",
-    items: [
-      { name: "Stocks", to: "/stocks" },
-      { name: "Expenses", to: "/expenses" },
-      { name: "Booking", to: "/booking" },
-    ],
-  },
-  {
     name: "Customers",
     to: "/customers",
     items: [],
-  },
-  {
-    name: "Payment",
-    to: "/payment",
-    items: [
-      { name: "Invocie List", to: "/invoices-list" },
-    ],
   },
 ];
 

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { NavLayout } from "./layouts/nav";
 import { Context } from "./contexts/context";
 import "./styles/index.css";
@@ -12,6 +12,7 @@ import environment from "./config";
 
 function App() {
   const { isLogin, login, isAdmin } = useContext(Context);
+  const navigate = useNavigate();
   React.useEffect(() => {
     async function fetchData() {
       // You can await here
@@ -24,9 +25,11 @@ function App() {
           // Handle success
           console.log(data);
           if (data.roles.includes("Admin")) {
-            login({ isLogin: true, isAdmin: false, user: data });
+            login({ isLogin: true, isAdmin: true, user: data });
+            navigate("/admin");
           } else {
             login({ isLogin: true, isAdmin: false, user: data });
+            navigate("/home");
           }
         })
         .catch((err) => {
@@ -39,7 +42,7 @@ function App() {
   }, []);
 
   console.log(isLogin);
-  if (!!isAdmin) {
+  if (!isAdmin) {
     return (
       <Routes>
         <Route element={<NavLayout />}>
@@ -58,7 +61,7 @@ function App() {
           <Route element={<AdminLayout />}>
             <Route path="/admin/*" element={<AdminRoute />} />
           </Route>
-          <Route path="/*" element={<Navigate to="/" replace={true} />} />
+          {/* <Route path="/*" element={<Navigate to="/" replace={true} />} /> */}
         </Route>
       </Routes>
     );

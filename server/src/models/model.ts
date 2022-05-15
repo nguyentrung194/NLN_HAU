@@ -141,8 +141,9 @@ const bookingSchema: Schema<Booking> = new Schema({
     },
   },
   room: {
-    type: Object(),
-    default: {},
+    id: {
+      type: String,
+    },
   },
   note: {
     type: String,

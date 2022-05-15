@@ -1,10 +1,42 @@
 import * as React from "react";
-import { CardCustomer } from "../common/card";
+import { CardCustomer } from "./card";
 import { MenuCustomHead } from "../common/menu";
 import { Typography, Button } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import environment from "../../../config";
+import axios from "axios";
 
 export const Customer = () => {
+  const [users, setUsers] = React.useState<any[]>([]);
+  React.useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      await axios({
+        url: `${environment.api}users`,
+        method: "GET",
+        // withCredentials: true,
+      })
+        .then(({ data: { data: users } }: { data: { data: any[] } }) => {
+          // Handle success
+          setUsers(
+            users.map((value) => {
+              Object.keys(value).forEach((k: any) => {
+                if (typeof value[k] === "object") {
+                  value[k] = JSON.stringify(value[k]);
+                }
+              });
+              return value;
+            })
+          );
+        })
+        .catch((err) => {
+          console.log(err);
+          // Handle error
+          console.log(err);
+        });
+    }
+    fetchData();
+  }, []);
   return (
     <div className="bg-gray-200/40 -mt-4 pt-4 min-h-screen">
       <div className="flex justify-between items-center px-6 pt-6">
@@ -21,14 +53,14 @@ export const Customer = () => {
           </Typography>
         </div>
         <div className="flex space-x-2">
-        <Button variant="outlined">
+          <Button variant="outlined">
             <span className="flex justify-between items-center">
               <CloudDownloadIcon fontSize="medium" color="primary" />
               <span className="pl-3">Export customers</span>
             </span>
           </Button>
           <MenuCustomHead
-            optionsBooking={[
+            options={[
               {
                 key: "1",
                 text: "Add customers",
@@ -44,7 +76,7 @@ export const Customer = () => {
         </div>
       </div>
       <div className="p-6">
-        <CardCustomer />
+        <CardCustomer values={users} />
       </div>
     </div>
   );

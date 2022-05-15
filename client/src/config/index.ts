@@ -1,26 +1,26 @@
 const local = {
   api: "http://localhost:5000/",
   firebase: {
-    apiKey: "AIzaSyAuqc0Q-NhDtJ2BMP7gG4wSjcyN0_UFBXw",
-    authDomain: "ani-success.firebaseapp.com",
-    projectId: "ani-success",
-    storageBucket: "ani-success.appspot.com",
-    messagingSenderId: "744377030507",
-    appId: "1:744377030507:web:681182bb9abb63e63c9e2e",
-    measurementId: "G-EYLY7ZLMN7",
+    apiKey: "AIzaSyD8miqPtBXeW8T7Tspv5zXywRIKpSOiA6k",
+    authDomain: "happy-new-yearn.firebaseapp.com",
+    projectId: "happy-new-yearn",
+    storageBucket: "happy-new-yearn.appspot.com",
+    messagingSenderId: "1001242671986",
+    appId: "1:1001242671986:web:e31d9c0a2945bcb3a87beb",
+    measurementId: "G-WDWNH6F3HC",
   },
 };
 
 const staging = {
   api: "",
   firebase: {
-    apiKey: "AIzaSyAuqc0Q-NhDtJ2BMP7gG4wSjcyN0_UFBXw",
-    authDomain: "ani-success.firebaseapp.com",
-    projectId: "ani-success",
-    storageBucket: "ani-success.appspot.com",
-    messagingSenderId: "744377030507",
-    appId: "1:744377030507:web:681182bb9abb63e63c9e2e",
-    measurementId: "G-EYLY7ZLMN7",
+    apiKey: "AIzaSyD8miqPtBXeW8T7Tspv5zXywRIKpSOiA6k",
+    authDomain: "happy-new-yearn.firebaseapp.com",
+    projectId: "happy-new-yearn",
+    storageBucket: "happy-new-yearn.appspot.com",
+    messagingSenderId: "1001242671986",
+    appId: "1:1001242671986:web:e31d9c0a2945bcb3a87beb",
+    measurementId: "G-WDWNH6F3HC",
   },
 };
 

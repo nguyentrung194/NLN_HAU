@@ -10,32 +10,21 @@ import {
   SelectChangeEvent,
   Button,
 } from "@mui/material";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import DatePicker from "@mui/lab/DatePicker";
 import * as React from "react";
 import { useFormik } from "formik";
 import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../../config";
-import { storage } from "../../../hooks/use-firebase";
 
 export const AddBooking = () => {
   const { addToast } = useToasts();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      gender: "",
-      phone: "",
-      email: "",
-      address: "",
-      photo: "",
       package_p: "",
-      roomType: "",
-      arrive: "",
-      totalPerson: "",
+      userId: "",
+      roomId: "",
       note: "",
+      status: "",
     },
     onSubmit: async (values) => {
       try {
@@ -96,116 +85,26 @@ export const AddBooking = () => {
               onSubmit={formik.handleSubmit}
               className="grid grid-cols-3 gap-3"
             >
-              <FormControl variant="standard" className="col-span-1">
+              <FormControl variant="standard" className="col-span-3">
                 <TextField
-                  id="First-Name"
-                  value={formik.values.firstName}
+                  id="UserId"
+                  value={formik.values.userId}
                   onChange={formik.handleChange}
-                  label="First Name"
-                  name="firstName"
+                  label="UserId"
+                  name="userId"
                   required
                 />
               </FormControl>
-              <FormControl variant="standard" className="col-span-1">
+              <FormControl variant="standard" className="col-span-3">
                 <TextField
-                  id="Last-Name"
-                  value={formik.values.lastName}
+                  id="RoomId"
+                  value={formik.values.roomId}
                   onChange={formik.handleChange}
-                  label="Last Name"
-                  name="lastName"
+                  label="RoomId"
+                  name="roomId"
                   required
                 />
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Gender-label">Gender</InputLabel>
-                  <Select
-                    labelId="Gender-label"
-                    id="Gender"
-                    label="Gender"
-                    value={formik.values.gender}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("gender", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"none"}>
-                      <em>Not prefer</em>
-                    </MenuItem>
-                    <MenuItem value={"Male"}>Male</MenuItem>
-                    <MenuItem value={"Female"}>Female</MenuItem>
-                    <MenuItem value={"Other"}>Other</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Phone"
-                  value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  label="Phone"
-                  name="phone"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Email Address"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  label="Email Address"
-                  name="email"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Address"
-                  value={formik.values.address}
-                  onChange={formik.handleChange}
-                  label="Address"
-                  name="address"
-                  required
-                />
-              </FormControl>
-              <div className="col-span-1 flex items-center">
-                <label className="h-full cursor-pointer border px-3 py-1.5 flex items-center justify-center w-full text-center hover:bg-slate-100 rou custom-file-upload">
-                  <input
-                    aria-label="File browser example"
-                    className="hidden"
-                    name="photo"
-                    type="file"
-                    accept="image/png,image/jpeg,image/jpg"
-                    onChange={(e) => {
-                      console.log(storage);
-                      formik.setSubmitting(true);
-                      const uploadFiles = Array.from(
-                        e.target.files as FileList
-                      ).map(async (file: File) => {
-                        const storageRef = storage.ref();
-                        const ref = storageRef.child(`assert/${file.name}`);
-                        const metadata = {
-                          size: file.size,
-                          contentType: file.type,
-                          name: file.name,
-                        };
-                        await ref.put(file, metadata);
-                        const assetUrl = await ref.getDownloadURL();
-                        formik.setSubmitting(false);
-                        return { ...metadata, assetUrl };
-                      });
-                      console.log(uploadFiles);
-                      Promise.all(uploadFiles)
-                        .then(async (result) => {
-                          formik.setFieldValue("photo", result[0].assetUrl);
-                        })
-                        .catch((error) => {
-                          console.log(error.message);
-                        });
-                    }}
-                  />
-                  Upload Photo
-                </label>
-              </div>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
                   <InputLabel id="Select-an-package-label">
@@ -233,48 +132,6 @@ export const AddBooking = () => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-Room-Type-label">
-                    Select Room Type
-                  </InputLabel>
-                  <Select
-                    labelId="Select-Room-Type-label"
-                    id="Select-Room-Type"
-                    label="Select Room Type"
-                    value={formik.values.roomType}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("roomType", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Single"}>Single</MenuItem>
-                    <MenuItem value={"Double"}>Double</MenuItem>
-                    <MenuItem value={"Delux"}>Delux</MenuItem>
-                    <MenuItem value={"Super Delux"}>Super Delux</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Total Person"
-                  value={formik.values.totalPerson}
-                  onChange={formik.handleChange}
-                  label="Total Person"
-                  name="totalPerson"
-                  required
-                />
-              </FormControl>
-              <LocalizationProvider
-                dateAdapter={AdapterDateFns}
-                className="col-span-1"
-              >
-                <DatePicker
-                  label="Arrived Date"
-                  value={formik.values.arrive}
-                  onChange={(value) => formik.setFieldValue("arrive", value)}
-                  renderInput={(params) => <TextField required {...params} />}
-                />
-              </LocalizationProvider>
               <FormControl variant="standard" className="col-span-3">
                 <TextField
                   id="Note"

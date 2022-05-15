@@ -12,24 +12,20 @@ export interface DataCustomer {
   updated_at: string;
 }
 
-export interface DataProduct {
+export interface DataRoom {
   id: string;
-  name: string;
-  quantity: number;
+  room_no: string;
+  room_type: string;
   description: string;
-  categories: string;
-  unit: string;
-  price: number;
+  rent: string;
   images: string;
   reviews: string;
-  countReviews: number;
-  avgStar: number;
   status: string;
   created_at: string;
   updated_at: string;
 }
 
-export interface DataCategory {
+export interface DataRoomType {
   id: string;
   name: string;
   image: string;
@@ -40,8 +36,10 @@ export interface DataCategory {
 
 export interface DataBooking {
   id: string;
-  name: string;
-  image: string;
+  package_p: string;
+  note: string;
+  user: string;
+  room: string;
   status: string;
   created_at: string;
   updated_at: string;

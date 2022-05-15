@@ -43,11 +43,9 @@ export const Register = () => {
           .then(({ data }) => {
             // Handle success
             if (data.data.roles.includes("Admin")) {
-              login({ isLogin: true, isAdmin: true, user: data.data });
-              navigate("/admin");
+              navigate("/home/login");
             } else {
-              login({ isLogin: true, isAdmin: false, user: data.data });
-              navigate("/home");
+              navigate("/home/login");
             }
             addToast(`Success`, {
               appearance: "success",
