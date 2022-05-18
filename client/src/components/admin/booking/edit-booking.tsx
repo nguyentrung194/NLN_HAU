@@ -60,7 +60,13 @@ export const EditBooking = () => {
         axios({
           url: `${environment.api}bookings/${id}`,
           method: "PUT",
-          data: {},
+          data: {
+            package_p: values.package_p,
+            userId: values.userId,
+            roomId: values.roomId,
+            note: values.note,
+            status: values.status,
+          },
           withCredentials: true,
         })
           .then(({ data }) => {

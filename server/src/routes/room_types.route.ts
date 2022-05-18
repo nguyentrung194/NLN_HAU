@@ -19,13 +19,13 @@ class RoomTypesRoute implements Routes {
     this.router.get(`${this.path}/:id`, this.room_typesController.getRoomTypeById);
     this.router.post(
       `${this.path}`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateRoomTypeDto, 'body'),
       this.room_typesController.createRoomType,
     );
     this.router.put(
       `${this.path}/:id`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateRoomTypeDto, 'body', true),
       this.room_typesController.updateRoomType,
     );

@@ -34,10 +34,7 @@ export interface Room {
 export interface RoomType {
   id: string;
   name: string;
-  rent: number;
-  short_code: string;
-  no_of_room: number;
-  type_star: number;
+  image: string;
   status: string;
   created_at: Date;
   updated_at: Date;

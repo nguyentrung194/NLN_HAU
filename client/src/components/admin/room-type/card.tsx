@@ -455,7 +455,19 @@ export const RoomTypeTable = ({ rows }: { rows: DataRoomType[] }) => {
                         {row.id}
                       </TableCell>
                       <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center">{row.image}</TableCell>
+                      <TableCell align="center">
+                        {row.image ? (
+                          <CardMedia
+                            component="img"
+                            height="100"
+                            sx={{ maxWidth: 100 }}
+                            image={`${row.image}`}
+                            alt="green iguana"
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <MenuCustom

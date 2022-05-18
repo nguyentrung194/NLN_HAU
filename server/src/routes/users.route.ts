@@ -3,7 +3,7 @@ import UsersController from '@controllers/users.controller';
 import { CreateUserDto } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
-// import authMiddlewareAdmin from '@/middlewares/auth.middleware.admin';
+import authMiddlewareAdmin from '@/middlewares/auth.middleware.admin';
 import authMiddleware from '@/middlewares/auth.middleware';
 
 class UsersRoute implements Routes {
@@ -29,7 +29,11 @@ class UsersRoute implements Routes {
       validationMiddleware(CreateUserDto, 'body', true),
       this.usersController.updateUser,
     );
-    this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
+    this.router.delete(
+      `${this.path}/:id`,
+      authMiddlewareAdmin,
+      this.usersController.deleteUser,
+    );
   }
 }
 

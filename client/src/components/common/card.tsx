@@ -28,8 +28,7 @@ const responsive = {
   },
 };
 
-export const ActionAreaCard = ({ image }: { image: string }) => {
-  const images = [image, image, image];
+export const ActionAreaCard = ({ ele }: any) => {
   const [isShown, setIsShown] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
   return (
@@ -58,7 +57,7 @@ export const ActionAreaCard = ({ image }: { image: string }) => {
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
-            {images.map((el) => {
+            {JSON.parse(ele.images || "[]").map((el: any) => {
               return (
                 <CardMedia
                   component="img"
@@ -71,7 +70,7 @@ export const ActionAreaCard = ({ image }: { image: string }) => {
           </Carousel>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              Entire cabin - 6 beds
+              {ele.room_no}
             </Typography>
             <Typography
               className="flex justify-between"
@@ -79,7 +78,7 @@ export const ActionAreaCard = ({ image }: { image: string }) => {
               variant="h5"
               component="div"
             >
-              Paris
+              {ele.room_type}
               <div
                 className={`bg-black/20 hover:bg-black/40 rounded-full ${
                   isFavorite ? "text-white" : "text-red-500"
@@ -101,7 +100,11 @@ export const ActionAreaCard = ({ image }: { image: string }) => {
             </Typography>
             <Typography className="flex justify-between py-2" variant="body2">
               <span className="flex justify-center items-center  space-x-1">
-                <strong>$250</strong> <span>/night</span>
+                <strong>{`${ele.rent.toLocaleString("it-IT", {
+                  style: "currency",
+                  currency: "VND",
+                })}`}</strong>{" "}
+                <span>/night</span>
               </span>
               <span className="flex justify-center items-center space-x-1">
                 <StarIcon className="text-yellow-300" /> <strong>4.3</strong>{" "}

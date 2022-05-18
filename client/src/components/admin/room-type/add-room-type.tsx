@@ -9,24 +9,22 @@ import {
   MenuItem,
   SelectChangeEvent,
   Button,
+  CardMedia,
 } from "@mui/material";
 import * as React from "react";
 import { useFormik } from "formik";
 import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../../config";
+import { storage } from "../../../hooks/use-firebase";
 
 export const AddRoomType = () => {
   const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
-      id: "",
       name: "",
-      rent: "",
-      shortCode: "",
-      noOfRoom: "",
-      type: "",
+      image: "",
       status: "",
     },
     onSubmit: async (values) => {
@@ -34,9 +32,9 @@ export const AddRoomType = () => {
         formik.setSubmitting(true);
         // code there
         axios({
-          url: `${environment.api}room-types`,
+          url: `${environment.api}room_types`,
           method: "POST",
-          data: {},
+          data: values,
           withCredentials: true,
         })
           .then(({ data }) => {
@@ -90,16 +88,6 @@ export const AddRoomType = () => {
             >
               <FormControl variant="standard" className="col-span-1">
                 <TextField
-                  id="ID"
-                  value={formik.values.id}
-                  onChange={formik.handleChange}
-                  label="ID"
-                  name="id"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
                   id="Name"
                   value={formik.values.name}
                   onChange={formik.handleChange}
@@ -108,48 +96,63 @@ export const AddRoomType = () => {
                   required
                 />
               </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Rent"
-                  value={formik.values.rent}
-                  onChange={formik.handleChange}
-                  label="Rent"
-                  name="rent"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Short Code"
-                  value={formik.values.shortCode}
-                  onChange={formik.handleChange}
-                  label="Short Code"
-                  name="shortCode"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="No Of Room"
-                  value={formik.values.noOfRoom}
-                  onChange={formik.handleChange}
-                  label="No Of Room"
-                  name="noOfRoom"
-                  type="number"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Type"
-                  value={formik.values.type}
-                  onChange={formik.handleChange}
-                  label="Type"
-                  name="type"
-                  type="number"
-                  required
-                />
-              </FormControl>
+              <div className="col-span-1 row-span-2 flex items-start flex-col">
+                {formik.values.image ? (
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    sx={{ maxWidth: 100 }}
+                    image={`${formik.values.image}`}
+                    alt="green iguana"
+                  />
+                ) : (
+                  ""
+                )}
+                <div className="flex items-center">
+                  <label className="h-full cursor-pointer border px-3 py-1.5 flex items-center justify-center w-full text-center hover:bg-slate-100 rou custom-file-upload">
+                    <input
+                      aria-label="File browser"
+                      className="hidden"
+                      name="images"
+                      type="file"
+                      accept="image/png,image/jpeg,image/jpg"
+                      onChange={(e) => {
+                        console.log(storage);
+                        formik.setSubmitting(true);
+                        const uploadFiles = Array.from(
+                          e.target.files as FileList
+                        ).map(async (file: File) => {
+                          const storageRef = storage.ref();
+                          const ref = storageRef.child(`assert/${file.name}`);
+                          const metadata = {
+                            size: file.size,
+                            contentType: file.type,
+                            name: file.name,
+                          };
+                          await ref.put(file, metadata);
+                          const assetUrl = await ref.getDownloadURL();
+                          formik.setSubmitting(false);
+                          return { ...metadata, assetUrl };
+                        });
+                        console.log(uploadFiles);
+                        Promise.all(uploadFiles)
+                          .then(async (result) => {
+                            formik.setFieldValue(
+                              "image",
+                              result.map((el) => {
+                                return el.assetUrl;
+                              })[0]
+                            );
+                          })
+                          .catch((error) => {
+                            console.log(error.message);
+                          });
+                      }}
+                    />
+                    Upload Photo
+                  </label>
+                </div>
+              </div>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
                   <InputLabel id="Status-label">Select an status</InputLabel>

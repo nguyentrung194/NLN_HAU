@@ -94,14 +94,14 @@ const headCellsRoom: HeadCell<DataRoom>[] = [
   {
     id: "room_no",
     numeric: false,
-    disableSort: true,
+    disableSort: false,
     disablePadding: true,
     label: "room_no",
   },
   {
     id: "room_type",
     numeric: false,
-    disableSort: true,
+    disableSort: false,
     disablePadding: true,
     label: "room_type",
   },
@@ -484,7 +484,21 @@ export const RoomTable = ({ rows }: { rows: DataRoom[] }) => {
                       <TableCell align="center">{row.room_type}</TableCell>
                       <TableCell align="center">{row.description}</TableCell>
                       <TableCell align="center">{row.rent}</TableCell>
-                      <TableCell align="center">{row.images}</TableCell>
+                      <TableCell align="center">
+                        {JSON.parse(row.images).length
+                          ? JSON.parse(row.images || "[]").map((el: any) => {
+                              return (
+                                <CardMedia
+                                  component="img"
+                                  height="100"
+                                  sx={{ maxWidth: 100 }}
+                                  image={`${el}`}
+                                  alt="green iguana"
+                                />
+                              );
+                            })
+                          : ""}
+                      </TableCell>
                       <TableCell align="center">{row.reviews}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">

@@ -15,23 +15,31 @@ class BookingsRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.bookingsController.getBookings);
-    this.router.get(`${this.path}/:id`, this.bookingsController.getBookingById);
+    this.router.get(
+      `${this.path}`,
+      authMiddlewareAdmin,
+      this.bookingsController.getBookings,
+    );
+    this.router.get(
+      `${this.path}/:id`,
+      authMiddlewareAdmin,
+      this.bookingsController.getBookingById,
+    );
     this.router.post(
       `${this.path}`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateBookingDto, 'body'),
       this.bookingsController.createBooking,
     );
     this.router.put(
       `${this.path}/:id`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateBookingDto, 'body', true),
       this.bookingsController.updateBooking,
     );
     this.router.delete(
       `${this.path}/:id`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       this.bookingsController.deleteBooking,
     );
   }

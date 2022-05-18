@@ -30,28 +30,29 @@ const images = [
 
 export const CarouselMulti = (props: any) => {
   return (
-    <Carousel
-      swipeable={true}
-      draggable={true}
-      showDots={true}
-      responsive={responsive}
-      ssr={true} // means to render carousel on server-side.
-      infinite={true}
-      autoPlay={props.deviceType !== "mobile" ? true : false}
-      autoPlaySpeed={5000}
-      keyBoardControl={true}
-      customTransition="transform 300ms ease-in-out"
-      transitionDuration={500}
-      containerClass="carousel-container"
-      removeArrowOnDeviceType={["tablet", "mobile"]}
-      deviceType={props.deviceType}
-      arrows={false}
-      dotListClass="custom-dot-list-style"
-      itemClass="carousel-item-padding-40-px"
-    >
-      {images.map((el) => {
-        return <ActionAreaCard image={el} />;
-      })}
-    </Carousel>
+    // <Carousel
+    //   swipeable={true}
+    //   draggable={true}
+    //   showDots={true}
+    //   responsive={responsive}
+    //   ssr={true} // means to render carousel on server-side.
+    //   infinite={true}
+    //   autoPlay={props.deviceType !== "mobile" ? true : false}
+    //   autoPlaySpeed={5000}
+    //   keyBoardControl={true}
+    //   customTransition="transform 300ms ease-in-out"
+    //   transitionDuration={500}
+    //   containerClass="carousel-container"
+    //   removeArrowOnDeviceType={["tablet", "mobile"]}
+    //   deviceType={props.deviceType}
+    //   arrows={false}
+    //   dotListClass="custom-dot-list-style"
+    //   itemClass="carousel-item-padding-40-px"
+    // >
+    //   {images.map((el) => {
+    //     return <ActionAreaCard ele={el} />;
+    //   })}
+    // </Carousel>
+    <div></div>
   );
 };

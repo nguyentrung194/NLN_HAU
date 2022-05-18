@@ -32,7 +32,7 @@ export const AdminRoute = () => {
       {/* rooms/rooms-type */}
       <Route path="rooms/rooms-type" element={<RoomsType />} />
       <Route path="rooms/add-room-type" element={<AddRoomType />} />
-      <Route path="rooms/edit-room-type/:id" element={<EditRoomType />} />
+      <Route path="roomTypes/edit-roomType/:id" element={<EditRoomType />} />
 
       {/* customers */}
       <Route path="customers" element={<Customer />} />

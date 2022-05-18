@@ -226,6 +226,17 @@ export const EditCustomer = () => {
               </FormControl>
               <FormControl variant="standard" className="col-span-1">
                 <TextField
+                  id="Password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  label="Password"
+                  name="password"
+                  type="password"
+                  required
+                />
+              </FormControl>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
                   id="phone"
                   value={formik.values.phone}
                   onChange={formik.handleChange}

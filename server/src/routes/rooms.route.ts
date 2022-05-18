@@ -20,19 +20,19 @@ class RoomsRoute implements Routes {
     this.router.get(`${this.path}/:id`, this.roomsController.getRoomById);
     this.router.post(
       `${this.path}`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateRoomDto, 'body', true),
       this.roomsController.createRoom,
     );
     this.router.put(
       `${this.path}/:id`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       validationMiddleware(CreateRoomDto, 'body', true),
       this.roomsController.updateRoom,
     );
     this.router.delete(
       `${this.path}/:id`,
-      // authMiddlewareAdmin,
+      authMiddlewareAdmin,
       this.roomsController.deleteRoom,
     );
   }
