@@ -34,9 +34,9 @@ export const Home = () => {
           <Hero />
         </div>
       </div>
-      <div>
+      {/* <div>
         <Heading />
-      </div>
+      </div> */}
       <div>
         <ListHotels />
       </div>
