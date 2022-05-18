@@ -17,7 +17,7 @@ export class CreateRoomDto {
   @IsArray()
   public images: Array<string>;
 
-  @IsArray()
+  @IsString()
   public reviews: Array<Review>;
 
   @IsString()

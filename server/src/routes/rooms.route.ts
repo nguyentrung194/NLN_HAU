@@ -21,7 +21,7 @@ class RoomsRoute implements Routes {
     this.router.post(
       `${this.path}`,
       // authMiddlewareAdmin,
-      validationMiddleware(CreateRoomDto, 'body'),
+      validationMiddleware(CreateRoomDto, 'body', true),
       this.roomsController.createRoom,
     );
     this.router.put(

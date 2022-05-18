@@ -14,7 +14,7 @@ export const HomeRoute = () => {
       <Route path="/login" element={<LoginRoute />} />
       <Route path="/register" element={<RegisterRoute />} />
       <Route path="/profile" element={<ProfileRoute />} />
-      <Route path="/*" element={<Navigate to="/" replace={true} />} />
+      {/* <Route path="/*" element={<Navigate to="/" replace={true} />} /> */}
     </Routes>
   );
 };
