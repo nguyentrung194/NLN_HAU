@@ -12,7 +12,7 @@ const local = {
 };
 
 const staging = {
-  api: "",
+  api: "/api/",
   firebase: {
     apiKey: "AIzaSyD8miqPtBXeW8T7Tspv5zXywRIKpSOiA6k",
     authDomain: "happy-new-yearn.firebaseapp.com",

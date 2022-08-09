@@ -11,14 +11,14 @@ export const Hero = () => {
       checkin: null,
       checkout: null,
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values: any) => {
       try {
         formik.setSubmitting(true);
 
         // code there
 
         formik.setSubmitting(false);
-      } catch (error) {
+      } catch (error: any) {
         // code there
 
         console.log(error);
@@ -54,8 +54,12 @@ export const Hero = () => {
               <DatePicker
                 label="Checkin"
                 value={formik.values.checkin}
-                onChange={(value) => formik.setFieldValue("checkin", value)}
-                renderInput={(params) => <TextField required {...params} />}
+                onChange={(value: any) =>
+                  formik.setFieldValue("checkin", value)
+                }
+                renderInput={(params: any) => (
+                  <TextField required {...params} />
+                )}
               />
             </LocalizationProvider>
           </div>
@@ -67,8 +71,12 @@ export const Hero = () => {
               <DatePicker
                 label="Checkout"
                 value={formik.values.checkout}
-                onChange={(value) => formik.setFieldValue("checkout", value)}
-                renderInput={(params) => <TextField required {...params} />}
+                onChange={(value: any) =>
+                  formik.setFieldValue("checkout", value)
+                }
+                renderInput={(params: any) => (
+                  <TextField required {...params} />
+                )}
               />
             </LocalizationProvider>
           </div>
