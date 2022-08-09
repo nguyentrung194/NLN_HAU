@@ -1,5 +1,30 @@
-version: "3.9"
+version: "3.4"
 services:
+  server:
+    build:
+      context: ./server
+      target: development-build-stage
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    # restart: 'unless-stopped'
+    networks:
+      - server
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - 80:3000
+    # restart: unless-stopped
+    volumes:
+      - ./client:/app
+      - /app/node_modules/
+    command: npm start
   mongo:
     image: mvertes/alpine-mongo
     container_name: mongo
