@@ -1,5 +1,5 @@
 import { Review } from '@/interfaces/interface';
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateRoomDto {
   @IsString()
@@ -17,7 +17,7 @@ export class CreateRoomDto {
   @IsArray()
   public images: Array<string>;
 
-  @IsString()
+  @IsOptional()
   public reviews: Array<Review>;
 
   @IsString()

@@ -33,6 +33,9 @@ import { visuallyHidden } from "@mui/utils";
 import { SelectFilter } from "../common/common";
 
 import { DataRoom } from "../../../interfaces";
+import axios from "axios";
+import environment from "../../../config";
+import { useToasts } from "react-toast-notifications";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -267,10 +270,58 @@ interface EnhancedTableToolbarProps {
   selectOptions2?: any[];
   title: string;
   emailVerified?: boolean;
+  selected: any;
 }
 
 const EnhancedTableToolbarCustom = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
+  const { numSelected, selected } = props;
+  const { addToast } = useToasts();
+
+  const handleDelete = async () => {
+    try {
+      // code there
+      const items = selected.map(async (item: any) => {
+        axios({
+          url: `${environment.api}rooms/${item}`,
+          method: "DELETE",
+          withCredentials: true,
+        })
+          .then(({ data }) => {
+            // Handle success
+          })
+          .catch((err) => {
+            console.log(err);
+            // Handle error
+            addToast("Error!!", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+          });
+        return item;
+      });
+      Promise.all(items)
+        .then(async () => {
+          addToast("Oke!", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        })
+        .catch((error) => {
+          addToast("Error!!", {
+            appearance: "error",
+            autoDismiss: true,
+          });
+          console.log(error.message);
+        });
+    } catch (error) {
+      // Handle error
+      addToast("Error!!", {
+        appearance: "error",
+        autoDismiss: true,
+      });
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -308,7 +359,11 @@ const EnhancedTableToolbarCustom = (props: EnhancedTableToolbarProps) => {
                   {numSelected} selected
                 </Typography>
                 <Tooltip title="Delete">
-                  <IconButton>
+                  <IconButton
+                    onClick={async () => {
+                      await handleDelete();
+                    }}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
@@ -408,6 +463,7 @@ export const RoomTable = ({ rows }: { rows: DataRoom[] }) => {
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbarCustom
+          selected={selected}
           numSelected={selected.length}
           selectOptionsLeft={[{ value: "delete", text: "Delete Rooms" }]}
           selectOptions={[
