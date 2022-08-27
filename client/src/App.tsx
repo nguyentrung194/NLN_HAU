@@ -26,10 +26,10 @@ function App() {
           console.log(data);
           if (data.roles.includes("Admin")) {
             login({ isLogin: true, isAdmin: true, user: data });
-            // navigate("/admin");
+            navigate("/admin");
           } else {
             login({ isLogin: true, isAdmin: false, user: data });
-            // navigate("/home");
+            navigate("/");
           }
         })
         .catch((err) => {
@@ -56,12 +56,12 @@ function App() {
     return (
       <Routes>
         <Route element={<NavLayout />}>
-          <Route path="/" element={<Navigate to="/home" replace={true} />} />
-          <Route path="/home/*" element={<HomeRoute />} />
+          {/* <Route path="/" element={<Navigate to="/home" replace={true} />} /> */}
+          {/* <Route path="/home/*" element={<HomeRoute />} /> */}
           <Route element={<AdminLayout />}>
             <Route path="/admin/*" element={<AdminRoute />} />
           </Route>
-          {/* <Route path="/*" element={<Navigate to="/" replace={true} />} /> */}
+          <Route path="/*" element={<Navigate to="/admin" replace={true} />} />
         </Route>
       </Routes>
     );

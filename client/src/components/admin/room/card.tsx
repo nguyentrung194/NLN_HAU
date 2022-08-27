@@ -102,13 +102,6 @@ const headCellsRoom: HeadCell<DataRoom>[] = [
     label: "room_no",
   },
   {
-    id: "room_type",
-    numeric: false,
-    disableSort: false,
-    disablePadding: true,
-    label: "room_type",
-  },
-  {
     id: "description",
     numeric: false,
     disableSort: true,
@@ -128,13 +121,6 @@ const headCellsRoom: HeadCell<DataRoom>[] = [
     disableSort: true,
     disablePadding: true,
     label: "images",
-  },
-  {
-    id: "reviews",
-    numeric: false,
-    disableSort: true,
-    disablePadding: true,
-    label: "reviews",
   },
   {
     id: "status",
@@ -537,7 +523,6 @@ export const RoomTable = ({ rows }: { rows: DataRoom[] }) => {
                         {row.id}
                       </TableCell>
                       <TableCell align="center">{row.room_no}</TableCell>
-                      <TableCell align="center">{row.room_type}</TableCell>
                       <TableCell align="center">{row.description}</TableCell>
                       <TableCell align="center">{row.rent}</TableCell>
                       <TableCell align="center">
@@ -555,7 +540,6 @@ export const RoomTable = ({ rows }: { rows: DataRoom[] }) => {
                             })
                           : ""}
                       </TableCell>
-                      <TableCell align="center">{row.reviews}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <MenuCustom

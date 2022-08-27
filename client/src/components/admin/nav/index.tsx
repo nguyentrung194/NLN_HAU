@@ -110,10 +110,7 @@ const navs = [
   {
     name: "Rooms",
     to: "/rooms",
-    items: [
-      { name: "All Rooms", to: "/all" },
-      { name: "Rooms Type", to: "/rooms-type" },
-    ],
+    items: [],
   },
   {
     name: "Customers",

@@ -20,7 +20,6 @@ export const AddBooking = () => {
   const { addToast } = useToasts();
   const formik = useFormik({
     initialValues: {
-      package_p: "",
       userId: "",
       roomId: "",
       note: "",
@@ -105,33 +104,6 @@ export const AddBooking = () => {
                   required
                 />
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-an-package-label">
-                    Select an package
-                  </InputLabel>
-                  <Select
-                    labelId="Select-an-package-label"
-                    id="Select-an-package"
-                    label="Select an package"
-                    value={formik.values.package_p}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("package_p", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Strater Package"}>
-                      Strater Package
-                    </MenuItem>
-                    <MenuItem value={"Honeymoon Package"}>
-                      Honeymoon Package
-                    </MenuItem>
-                    <MenuItem value={"Spring Package"}>Spring Package</MenuItem>
-                    <MenuItem value={"Vacation Package"}>
-                      Vacation Package
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
               <FormControl variant="standard" className="col-span-3">
                 <TextField
                   id="Note"

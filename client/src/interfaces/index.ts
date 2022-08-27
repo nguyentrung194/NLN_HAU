@@ -10,6 +10,7 @@ export interface DataCustomer {
   roles: string;
   created_at: string;
   updated_at: string;
+  room_id: string;
 }
 
 export interface DataRoom {

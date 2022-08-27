@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose';
-import { Room, RoomType, Booking, User, Review } from '@/interfaces/interface';
+import { Room, Booking, User } from '@/interfaces/interface';
 
 const userSchema: Schema<User> = new Schema({
   id: {
@@ -47,6 +47,10 @@ const userSchema: Schema<User> = new Schema({
     type: Date,
     default: new Date(),
   },
+  room_id: {
+    type: String,
+    default: 1,
+  },
 });
 
 export const userModel = model<User & Document>('User', userSchema);
@@ -60,10 +64,6 @@ const roomSchema: Schema<Room> = new Schema({
     type: String,
     require,
   },
-  room_type: {
-    type: String,
-    require,
-  },
   description: {
     type: String,
     default: '',
@@ -74,10 +74,6 @@ const roomSchema: Schema<Room> = new Schema({
   },
   images: {
     type: Array<String>(),
-    default: [],
-  },
-  reviews: {
-    type: Array<Review>(),
     default: [],
   },
   status: {
@@ -101,34 +97,6 @@ roomSchema.index({
   status: 'text',
 });
 export const roomModel = model<Room & Document>('Room', roomSchema);
-
-const room_typeSchema: Schema<RoomType> = new Schema({
-  id: {
-    type: String,
-    unique: true,
-  },
-  name: {
-    type: String,
-    require,
-  },
-  image: {
-    type: String,
-  },
-  status: {
-    type: String,
-    default: 'Active',
-  },
-  created_at: {
-    type: Date,
-    default: new Date(),
-  },
-  updated_at: {
-    type: Date,
-    default: new Date(),
-  },
-});
-
-export const room_typeModel = model<RoomType & Document>('RoomType', room_typeSchema);
 
 const bookingSchema: Schema<Booking> = new Schema({
   id: {

@@ -112,12 +112,6 @@ const headCellsBooking: HeadCell<DataBooking>[] = [
     disableSort: true,
   },
   {
-    id: "package_p",
-    numeric: true,
-    disablePadding: true,
-    label: "Package",
-  },
-  {
     id: "status",
     numeric: false,
     disablePadding: true,
@@ -466,7 +460,6 @@ export const BookingTable = ({ rows }: { rows: DataBooking[] }) => {
                       <TableCell align="center">{row.user}</TableCell>
                       <TableCell align="center">{row.room}</TableCell>
                       <TableCell align="center">{row.note}</TableCell>
-                      <TableCell align="center">{row.package_p}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <MenuCustom

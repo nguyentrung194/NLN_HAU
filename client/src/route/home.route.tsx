@@ -9,12 +9,12 @@ import { ProfileRoute } from "./profile.route";
 export const HomeRoute = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      {/* <Route path="/" element={<Home />} /> */}
       <Route path="details/:id" element={<DetailsHotel />} />
       <Route path="/login" element={<LoginRoute />} />
       <Route path="/register" element={<RegisterRoute />} />
       <Route path="/profile" element={<ProfileRoute />} />
-      {/* <Route path="/*" element={<Navigate to="/" replace={true} />} /> */}
+      <Route path="/*" element={<Navigate to="login" replace={true} />} />
     </Routes>
   );
 };

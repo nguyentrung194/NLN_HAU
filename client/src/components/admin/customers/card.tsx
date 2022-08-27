@@ -115,23 +115,10 @@ const headCellsCustomer: HeadCell<DataCustomer>[] = [
     label: "Phone",
   },
   {
-    id: "verified",
+    id: "room_id",
     numeric: false,
-    disablePadding: true,
-    label: "Verified",
-  },
-  {
-    id: "group",
-    numeric: false,
-    disablePadding: true,
-    label: "Group",
-  },
-  {
-    id: "roles",
-    numeric: false,
-    disablePadding: true,
-    label: "Group",
-    disableSort: true,
+    disablePadding: false,
+    label: "Room id",
   },
 ];
 
@@ -485,13 +472,7 @@ export const CustomerTable = ({ rows }: { rows: DataCustomer[] }) => {
                       </TableCell>
                       <TableCell align="center">{row.email}</TableCell>
                       <TableCell align="center">{row.phone}</TableCell>
-                      <TableCell align="center">{row.verified}</TableCell>
-                      <TableCell align="center">{row.group}</TableCell>
-                      <TableCell align="center">
-                        {[...row.roles].map((el: string) => {
-                          return el;
-                        })}
-                      </TableCell>
+                      <TableCell align="center">{row.room_id}</TableCell>
                       <TableCell align="center">
                         <MenuCustom
                           optionsOrder={[

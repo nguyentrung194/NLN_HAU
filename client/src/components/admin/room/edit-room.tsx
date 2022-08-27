@@ -50,11 +50,9 @@ export const EditRoom = () => {
   const formik = useFormik({
     initialValues: {
       room_no: "",
-      room_type: "",
       description: "",
       rent: 0,
       images: [],
-      reviews: "",
       status: "",
     },
     onSubmit: async (values) => {
@@ -66,11 +64,9 @@ export const EditRoom = () => {
           method: "PUT",
           data: {
             room_no: values.room_no,
-            room_type: values.room_type,
             description: values.description,
             rent: values.rent,
             images: values.images,
-            reviews: values.reviews,
             status: values.status,
           },
           withCredentials: true,
@@ -134,27 +130,6 @@ export const EditRoom = () => {
                   required
                 />
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-Room-Type-label">
-                    Select Room Type
-                  </InputLabel>
-                  <Select
-                    labelId="Select-Room-Type-label"
-                    id="Select-Room-Type"
-                    label="Select Room Type"
-                    value={formik.values.room_type}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("room_type", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Single"}>Single</MenuItem>
-                    <MenuItem value={"Double"}>Double</MenuItem>
-                    <MenuItem value={"Delux"}>Delux</MenuItem>
-                    <MenuItem value={"Super Delux"}>Super Delux</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
               <FormControl variant="standard" className="col-span-1">
                 <TextField
                   id="Description"
@@ -237,16 +212,6 @@ export const EditRoom = () => {
                   </label>
                 </div>
               </div>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
-                  id="Review"
-                  value={formik.values.reviews}
-                  onChange={formik.handleChange}
-                  label="Review"
-                  name="reviews"
-                  multiline
-                />
-              </FormControl>
               <div className="col-span-1 flex items-center">
                 <FormControl fullWidth>
                   <InputLabel id="Status-label">Select an status</InputLabel>

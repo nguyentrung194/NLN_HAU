@@ -76,11 +76,8 @@ export const EditCustomer = () => {
       name: "",
       email: "",
       phone: "",
-      password: "",
       image: "",
-      verified: "",
-      group: "",
-      roles: [],
+      room_id: "",
     },
     onSubmit: async (values) => {
       try {
@@ -93,11 +90,7 @@ export const EditCustomer = () => {
             name: values.name,
             email: values.email,
             phone: values.phone,
-            password: values.password,
             image: values.image,
-            verified: values.verified,
-            group: values.group,
-            roles: values.roles,
           },
         })
           .then(({ data }) => {
@@ -226,17 +219,6 @@ export const EditCustomer = () => {
               </FormControl>
               <FormControl variant="standard" className="col-span-1">
                 <TextField
-                  id="Password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  label="Password"
-                  name="password"
-                  type="password"
-                  required
-                />
-              </FormControl>
-              <FormControl variant="standard" className="col-span-1">
-                <TextField
                   id="phone"
                   value={formik.values.phone}
                   onChange={formik.handleChange}
@@ -245,62 +227,14 @@ export const EditCustomer = () => {
                   required
                 />
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="verified-label">
-                    Select an verified
-                  </InputLabel>
-                  <Select
-                    labelId="verified-label"
-                    id="verified"
-                    label="verified"
-                    value={formik.values.verified}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("verified", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Active"}>Active</MenuItem>
-                    <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="group-label">Select an group</InputLabel>
-                  <Select
-                    labelId="group-label"
-                    id="group"
-                    label="group"
-                    value={formik.values.group}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("group", event.target.value);
-                    }}
-                  >
-                    {["Basic", "Silver", "Gold", "Platinum", "Dimond"].map(
-                      (el) => {
-                        return <MenuItem value={el}>{el}</MenuItem>;
-                      }
-                    )}
-                  </Select>
-                </FormControl>
-              </div>
-              <FormControl
-                variant="standard"
-                className="col-span-1 flex justify-between"
-              >
-                {["Admin", "User"].map((el: string) => {
-                  return (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          onChange={() => handleCheckboxChange(el)}
-                          checked={state.selections.includes(el)}
-                        />
-                      }
-                      label={el}
-                    />
-                  );
-                })}
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="room_id"
+                  value={formik.values.room_id}
+                  onChange={formik.handleChange}
+                  label="room id"
+                  name="room_id"
+                />
               </FormControl>
               <Button type="submit" variant="contained">
                 Edit Customer

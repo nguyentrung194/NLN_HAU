@@ -4,20 +4,18 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import axios from "axios";
 import environment from "../../config";
 // import { PhongContext } from "../../contexts/reducer";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { classNames } from "../../common/lib";
 import { Context } from "../../contexts/context";
 import { stringAvatar } from "../../common/lib";
 
-const navigations = [
-  { name: "Home", to: "/home", current: false },
-  { name: "Admin", to: "/admin", current: false },
-];
+const navigations = [{ name: "Admin", to: "/admin", current: false }];
 
 export const Nav = () => {
   const { isLogin, login, user, isAdmin } = useContext(Context);
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location.pathname);
   const navigation = isAdmin
     ? navigations
@@ -165,6 +163,7 @@ export const Nav = () => {
                                   .then((res) => {
                                     console.log(res);
                                     login({ isLogin: false });
+                                    navigate("/");
                                   })
                                   .catch((err) => {
                                     console.log(err);

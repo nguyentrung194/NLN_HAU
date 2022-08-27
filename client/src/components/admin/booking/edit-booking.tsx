@@ -47,7 +47,6 @@ export const EditBooking = () => {
 
   const formik = useFormik({
     initialValues: {
-      package_p: "",
       userId: "",
       roomId: "",
       note: "",
@@ -61,7 +60,6 @@ export const EditBooking = () => {
           url: `${environment.api}bookings/${id}`,
           method: "PUT",
           data: {
-            package_p: values.package_p,
             userId: values.userId,
             roomId: values.roomId,
             note: values.note,
@@ -138,33 +136,6 @@ export const EditBooking = () => {
                   required
                 />
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-an-package-label">
-                    Select an package
-                  </InputLabel>
-                  <Select
-                    labelId="Select-an-package-label"
-                    id="Select-an-package"
-                    label="Select an package"
-                    value={formik.values.package_p}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("package_p", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"Strater Package"}>
-                      Strater Package
-                    </MenuItem>
-                    <MenuItem value={"Honeymoon Package"}>
-                      Honeymoon Package
-                    </MenuItem>
-                    <MenuItem value={"Spring Package"}>Spring Package</MenuItem>
-                    <MenuItem value={"Vacation Package"}>
-                      Vacation Package
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
               <FormControl variant="standard" className="col-span-3">
                 <TextField
                   id="Note"
